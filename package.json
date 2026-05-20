@@ -1,6 +1,6 @@
 {
   "name": "@aaglexx/mcp-man",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Registry and inspector for MCP servers — search, inspect, test from CLI or browser",
   "type": "module",
   "bin": {
