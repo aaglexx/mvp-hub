@@ -28,25 +28,37 @@ export interface TestResult {
   content: { type: string; text?: string }[];
 }
 
-const BASE = typeof window !== "undefined" && window.location.port === "4242"
-  ? "http://localhost:7070/api"
-  : "/api";
+// In prod (served statically on :4242), API is on :7070
+// In dev (Vite proxy), API is proxied via /api
+const BASE =
+  typeof window !== "undefined" && window.location.port === "4242"
+    ? "http://localhost:7070/api"
+    : "/api";
+
+async function apiFetch(url: string, init?: RequestInit): Promise<Response> {
+  const res = await fetch(url, init);
+  if (!res.ok) {
+    let msg: string;
+    try { msg = await res.text(); } catch { msg = res.statusText; }
+    throw new Error(msg);
+  }
+  return res;
+}
 
 export async function searchServers(query?: string, tag?: string): Promise<MCPServer[]> {
   const params = new URLSearchParams();
   if (query) params.set("q", query);
   if (tag) params.set("tag", tag);
-  const res = await fetch(`${BASE}/search?${params}`);
+  const res = await apiFetch(`${BASE}/search?${params}`);
   return res.json();
 }
 
 export async function inspectServer(command: string): Promise<InspectResult> {
-  const res = await fetch(`${BASE}/inspect`, {
+  const res = await apiFetch(`${BASE}/inspect`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ command }),
   });
-  if (!res.ok) throw new Error(await res.text());
   return res.json();
 }
 
@@ -55,11 +67,10 @@ export async function callTool(
   tool: string,
   args: Record<string, unknown>
 ): Promise<TestResult> {
-  const res = await fetch(`${BASE}/test`, {
+  const res = await apiFetch(`${BASE}/test`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ command, tool, args }),
   });
-  if (!res.ok) throw new Error(await res.text());
   return res.json();
 }

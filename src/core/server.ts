@@ -1,33 +1,80 @@
-import { createServer } from "http";
+import { createServer, IncomingMessage, ServerResponse } from "http";
 import { loadRegistry } from "../core/registry.js";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
 
 const PORT = 7070;
+const CONNECT_TIMEOUT_MS = 15000;
+const CALL_TIMEOUT_MS = 30000;
+
+function parseCommand(command: string): { cmd: string; args: string[] } {
+  // Simple shell-like split respecting quoted strings
+  const parts: string[] = [];
+  let current = "";
+  let inQuote = false;
+  let quoteChar = "";
+
+  for (const ch of command) {
+    if (inQuote) {
+      if (ch === quoteChar) { inQuote = false; }
+      else { current += ch; }
+    } else if (ch === '"' || ch === "'") {
+      inQuote = true;
+      quoteChar = ch;
+    } else if (ch === " " && current) {
+      parts.push(current);
+      current = "";
+    } else if (ch !== " ") {
+      current += ch;
+    }
+  }
+  if (current) parts.push(current);
+
+  return { cmd: parts[0] ?? "", args: parts.slice(1) };
+}
+
+function withTimeout<T>(promise: Promise<T>, ms: number, label: string): Promise<T> {
+  return new Promise((resolve, reject) => {
+    const timer = setTimeout(() => reject(new Error(`Timeout: ${label} took longer than ${ms}ms`)), ms);
+    promise.then((v) => { clearTimeout(timer); resolve(v); })
+           .catch((e) => { clearTimeout(timer); reject(e); });
+  });
+}
 
 async function connectAndRun<T>(
   command: string,
   fn: (client: Client) => Promise<T>
 ): Promise<T> {
-  const parts = command.split(" ");
-  const transport = new StdioClientTransport({ command: parts[0], args: parts.slice(1) });
+  const { cmd, args } = parseCommand(command);
+  if (!cmd) throw new Error("Empty command");
+
+  const transport = new StdioClientTransport({ command: cmd, args });
   const client = new Client({ name: "mcp-man", version: "0.1.0" }, {});
-  await client.connect(transport);
+
+  await withTimeout(client.connect(transport), CONNECT_TIMEOUT_MS, "connect");
   try {
-    return await fn(client);
+    return await withTimeout(fn(client), CALL_TIMEOUT_MS, "call");
   } finally {
-    await client.close();
+    await client.close().catch(() => {});
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function json(res: any, data: unknown, status = 200) {
+function json(res: ServerResponse<IncomingMessage>, data: unknown, status = 200) {
   res.writeHead(status, {
     "Content-Type": "application/json",
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Methods": "GET,POST,OPTIONS",
   });
   res.end(JSON.stringify(data));
+}
+
+async function readBody(req: IncomingMessage): Promise<string> {
+  return new Promise((resolve) => {
+    let body = "";
+    req.on("data", (c) => (body += c));
+    req.on("end", () => resolve(body));
+  });
 }
 
 export function startApiServer() {
@@ -45,55 +92,62 @@ export function startApiServer() {
 
     const url = new URL(req.url ?? "/", `http://localhost:${PORT}`);
 
-    // GET /api/search
-    if (req.method === "GET" && url.pathname === "/api/search") {
-      const q = url.searchParams.get("q") ?? undefined;
-      const tag = url.searchParams.get("tag") ?? undefined;
-      const registry = await loadRegistry();
-      let results = registry.servers;
-      if (q) results = results.filter((s) => s.name.includes(q) || s.description.toLowerCase().includes(q.toLowerCase()));
-      if (tag) results = results.filter((s) => s.tags.includes(tag));
-      return json(res, results);
-    }
+    try {
+      // GET /api/search
+      if (req.method === "GET" && url.pathname === "/api/search") {
+        const q = url.searchParams.get("q") ?? undefined;
+        const tag = url.searchParams.get("tag") ?? undefined;
+        const registry = await loadRegistry();
+        let results = registry.servers;
+        if (q) {
+          const lq = q.toLowerCase();
+          results = results.filter(
+            (s) => s.name.toLowerCase().includes(lq) || s.description.toLowerCase().includes(lq)
+          );
+        }
+        if (tag) results = results.filter((s) => s.tags.includes(tag));
+        return json(res, results);
+      }
 
-    // POST /api/inspect
-    if (req.method === "POST" && url.pathname === "/api/inspect") {
-      let body = "";
-      req.on("data", (c) => (body += c));
-      await new Promise((r) => req.on("end", r));
-      const { command } = JSON.parse(body);
-      try {
+      // POST /api/inspect
+      if (req.method === "POST" && url.pathname === "/api/inspect") {
+        const body = await readBody(req);
+        const { command } = JSON.parse(body);
+        if (!command) return json(res, { error: "command is required" }, 400);
+
         const result = await connectAndRun(command, async (client) => {
-          const [t, r, p] = await Promise.all([
-            client.listTools().catch(() => ({ tools: [] })),
-            client.listResources().catch(() => ({ resources: [] })),
-            client.listPrompts().catch(() => ({ prompts: [] })),
+          const [t, r, p] = await Promise.allSettled([
+            client.listTools(),
+            client.listResources(),
+            client.listPrompts(),
           ]);
-          return { tools: t.tools, resources: r.resources, prompts: p.prompts };
+          return {
+            tools: t.status === "fulfilled" ? t.value.tools : [],
+            resources: r.status === "fulfilled" ? r.value.resources : [],
+            prompts: p.status === "fulfilled" ? p.value.prompts : [],
+          };
         });
         return json(res, result);
-      } catch (e) {
-        return json(res, { error: String(e) }, 500);
       }
-    }
 
-    // POST /api/test
-    if (req.method === "POST" && url.pathname === "/api/test") {
-      let body = "";
-      req.on("data", (c) => (body += c));
-      await new Promise((r) => req.on("end", r));
-      const { command, tool, args } = JSON.parse(body);
-      try {
+      // POST /api/test
+      if (req.method === "POST" && url.pathname === "/api/test") {
+        const body = await readBody(req);
+        const { command, tool, args } = JSON.parse(body);
+        if (!command) return json(res, { error: "command is required" }, 400);
+        if (!tool) return json(res, { error: "tool is required" }, 400);
+
         const result = await connectAndRun(command, async (client) => {
-          return client.callTool({ name: tool, arguments: args });
+          return client.callTool({ name: tool, arguments: args ?? {} });
         });
         return json(res, result);
-      } catch (e) {
-        return json(res, { error: String(e) }, 500);
       }
-    }
 
-    json(res, { error: "not found" }, 404);
+      json(res, { error: "not found" }, 404);
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : String(e);
+      json(res, { error: msg }, 500);
+    }
   });
 
   server.listen(PORT, () => {
