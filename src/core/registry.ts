@@ -4,7 +4,7 @@ import { homedir } from "os";
 import { join } from "path";
 
 const REGISTRY_URL =
-  "https://raw.githubusercontent.com/your-org/mcp-hub/main/registry/servers.json";
+  "https://raw.githubusercontent.com/aaglexx/mvp-hub/main/registry/servers.json";
 
 const CACHE_DIR = join(homedir(), ".mcp-hub");
 const CACHE_FILE = join(CACHE_DIR, "registry.json");
