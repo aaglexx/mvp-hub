@@ -28,7 +28,9 @@ export interface TestResult {
   content: { type: string; text?: string }[];
 }
 
-const BASE = "/api";
+const BASE = typeof window !== "undefined" && window.location.port === "4242"
+  ? "http://localhost:7070/api"
+  : "/api";
 
 export async function searchServers(query?: string, tag?: string): Promise<MCPServer[]> {
   const params = new URLSearchParams();
