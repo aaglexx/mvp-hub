@@ -3,42 +3,242 @@
   "servers": [
     {
       "name": "@modelcontextprotocol/server-filesystem",
-      "description": "Read and write local files and directories",
-      "url": "https://github.com/modelcontextprotocol/servers",
-      "tags": ["filesystem", "official"],
+      "description": "Secure file operations — read, write, search, move files with configurable access controls",
+      "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/filesystem",
+      "tags": ["filesystem", "official", "files"],
       "author": "Anthropic",
       "license": "MIT"
     },
     {
       "name": "@modelcontextprotocol/server-github",
-      "description": "Interact with GitHub repos, issues and PRs",
-      "url": "https://github.com/modelcontextprotocol/servers",
-      "tags": ["git", "github", "official"],
+      "description": "Interact with GitHub repos, issues, PRs, code search and workflow management",
+      "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/github",
+      "tags": ["git", "github", "official", "devops"],
       "author": "Anthropic",
       "license": "MIT"
     },
     {
       "name": "@modelcontextprotocol/server-postgres",
-      "description": "Query and inspect PostgreSQL databases",
-      "url": "https://github.com/modelcontextprotocol/servers",
-      "tags": ["database", "postgres", "official"],
+      "description": "Connect to PostgreSQL — run queries, inspect schemas, analyze data",
+      "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/postgres",
+      "tags": ["database", "postgres", "official", "sql"],
+      "author": "Anthropic",
+      "license": "MIT"
+    },
+    {
+      "name": "@modelcontextprotocol/server-sqlite",
+      "description": "SQLite database operations with schema inspection and query execution",
+      "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/sqlite",
+      "tags": ["database", "sqlite", "official", "sql"],
       "author": "Anthropic",
       "license": "MIT"
     },
     {
       "name": "@modelcontextprotocol/server-brave-search",
-      "description": "Web search via the Brave Search API",
-      "url": "https://github.com/modelcontextprotocol/servers",
+      "description": "Web search via Brave Search API — get current results without a browser",
+      "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/brave-search",
       "tags": ["search", "web", "official"],
       "author": "Anthropic",
       "license": "MIT"
     },
     {
-      "name": "@modelcontextprotocol/server-slack",
-      "description": "Post messages and read channels in Slack",
-      "url": "https://github.com/modelcontextprotocol/servers",
-      "tags": ["slack", "messaging", "official"],
+      "name": "@modelcontextprotocol/server-fetch",
+      "description": "Fetch any URL and convert web content to clean markdown for LLM consumption",
+      "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/fetch",
+      "tags": ["web", "fetch", "official", "scraping"],
       "author": "Anthropic",
+      "license": "MIT"
+    },
+    {
+      "name": "@modelcontextprotocol/server-memory",
+      "description": "Knowledge graph-based persistent memory — store and retrieve facts across sessions",
+      "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/memory",
+      "tags": ["memory", "knowledge-graph", "official"],
+      "author": "Anthropic",
+      "license": "MIT"
+    },
+    {
+      "name": "@modelcontextprotocol/server-slack",
+      "description": "Post messages, read channels and threads in Slack workspaces",
+      "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/slack",
+      "tags": ["slack", "messaging", "official", "productivity"],
+      "author": "Anthropic",
+      "license": "MIT"
+    },
+    {
+      "name": "@modelcontextprotocol/server-git",
+      "description": "Read, search and manipulate Git repositories — log, diff, blame, commit",
+      "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/git",
+      "tags": ["git", "vcs", "official", "devops"],
+      "author": "Anthropic",
+      "license": "MIT"
+    },
+    {
+      "name": "@modelcontextprotocol/server-aws-kb-retrieval",
+      "description": "Retrieve knowledge from AWS Knowledge Base using Bedrock Agent Runtime",
+      "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/aws-kb-retrieval-server",
+      "tags": ["aws", "cloud", "rag", "official"],
+      "author": "Anthropic",
+      "license": "MIT"
+    },
+    {
+      "name": "@modelcontextprotocol/server-google-maps",
+      "description": "Google Maps integration — geocoding, directions, place search, distance matrix",
+      "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/google-maps",
+      "tags": ["maps", "google", "official", "location"],
+      "author": "Anthropic",
+      "license": "MIT"
+    },
+    {
+      "name": "@modelcontextprotocol/server-gdrive",
+      "description": "Access Google Drive files — search, read, list documents and spreadsheets",
+      "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/gdrive",
+      "tags": ["google", "drive", "official", "files", "productivity"],
+      "author": "Anthropic",
+      "license": "MIT"
+    },
+    {
+      "name": "@modelcontextprotocol/server-puppeteer",
+      "description": "Browser automation with Puppeteer — screenshot, click, fill forms, scrape JS-rendered pages",
+      "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/puppeteer",
+      "tags": ["browser", "automation", "scraping", "official"],
+      "author": "Anthropic",
+      "license": "MIT"
+    },
+    {
+      "name": "@playwright/mcp",
+      "description": "Browser automation via Playwright — cross-browser testing, screenshots, web scraping",
+      "url": "https://github.com/microsoft/playwright-mcp",
+      "tags": ["browser", "automation", "playwright", "testing"],
+      "author": "Microsoft",
+      "license": "Apache-2.0"
+    },
+    {
+      "name": "@notionhq/notion-mcp-server",
+      "description": "Official Notion MCP — read and write pages, databases, blocks in your workspace",
+      "url": "https://github.com/makenotion/notion-mcp-server",
+      "tags": ["notion", "productivity", "notes", "official"],
+      "author": "Notion",
+      "license": "MIT"
+    },
+    {
+      "name": "@sentry/mcp-server-sentry",
+      "description": "Retrieve Sentry issues, events and stack traces to debug errors with AI",
+      "url": "https://github.com/getsentry/sentry-mcp",
+      "tags": ["sentry", "monitoring", "debugging", "devops"],
+      "author": "Sentry",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-linear",
+      "description": "Manage Linear issues, projects and cycles — create, update, search tickets",
+      "url": "https://github.com/jerhadf/linear-mcp-server",
+      "tags": ["linear", "project-management", "productivity"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "@upstash/context7-mcp",
+      "description": "Fetch up-to-date library docs and code examples directly into your AI context",
+      "url": "https://github.com/upstash/context7",
+      "tags": ["docs", "developer", "context", "productivity"],
+      "author": "Upstash",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-docker",
+      "description": "Manage Docker containers, images and volumes through natural language",
+      "url": "https://github.com/ckreiling/mcp-server-docker",
+      "tags": ["docker", "devops", "containers"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "@modelcontextprotocol/server-redis",
+      "description": "Interact with Redis — get, set, list keys, pub/sub and more",
+      "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/redis",
+      "tags": ["redis", "database", "cache", "official"],
+      "author": "Anthropic",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-kubernetes",
+      "description": "Manage Kubernetes clusters — pods, deployments, services, logs",
+      "url": "https://github.com/Flux159/mcp-server-kubernetes",
+      "tags": ["kubernetes", "devops", "cloud"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-obsidian",
+      "description": "Read and write notes in your Obsidian vault via local REST API",
+      "url": "https://github.com/MarkusPfundstein/mcp-obsidian",
+      "tags": ["obsidian", "notes", "productivity"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-figma",
+      "description": "Access Figma files, components and design tokens from your AI assistant",
+      "url": "https://github.com/GLips/Figma-Context-MCP",
+      "tags": ["figma", "design", "ui"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-jira",
+      "description": "Create, update and search Jira issues and projects",
+      "url": "https://github.com/mark3labs/mcp-jira-server",
+      "tags": ["jira", "project-management", "productivity"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-stripe",
+      "description": "Stripe payments API — customers, charges, subscriptions, invoices",
+      "url": "https://github.com/stripe/agent-toolkit",
+      "tags": ["stripe", "payments", "finance"],
+      "author": "Stripe",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-qdrant",
+      "description": "Vector search with Qdrant — store and retrieve semantic memories for AI agents",
+      "url": "https://github.com/qdrant/mcp-server-qdrant",
+      "tags": ["vector-db", "rag", "memory", "search"],
+      "author": "Qdrant",
+      "license": "Apache-2.0"
+    },
+    {
+      "name": "mcp-server-mysql",
+      "description": "MySQL database integration with configurable access controls and schema inspection",
+      "url": "https://github.com/designcomputer/mysql_mcp_server",
+      "tags": ["database", "mysql", "sql"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-airtable",
+      "description": "Read and write Airtable bases — browse tables, create and update records",
+      "url": "https://github.com/domdomegg/airtable-mcp-server",
+      "tags": ["airtable", "database", "productivity"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-vercel",
+      "description": "Manage Vercel deployments, projects, domains and environment variables",
+      "url": "https://github.com/Quegenx/vercel-mcp-server",
+      "tags": ["vercel", "devops", "cloud", "deployment"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-openapi",
+      "description": "Turn any OpenAPI spec into an MCP server — call any REST API with tools",
+      "url": "https://github.com/janwilmake/openapi-mcp-server",
+      "tags": ["openapi", "rest", "api", "developer"],
+      "author": "community",
       "license": "MIT"
     }
   ]
