@@ -1,0 +1,8 @@
+src/
+web/src/
+web/index.html
+*.config.ts
+tsconfig.json
+node_modules/
+*.zip
+*.tar

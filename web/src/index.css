@@ -1,0 +1,34 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0a0a0a;
+  --bg2: #111111;
+  --bg3: #1a1a1a;
+  --border: #2a2a2a;
+  --border-bright: #3a3a3a;
+  --text: #e8e6e0;
+  --text-dim: #6b6966;
+  --text-mid: #a09d98;
+  --accent: #00e5a0;
+  --accent-dim: #00b87e;
+  --accent-glow: rgba(0, 229, 160, 0.12);
+  --red: #ff5f57;
+  --amber: #ffbd2e;
+  --font-mono: "IBM Plex Mono", monospace;
+  --font-sans: "IBM Plex Sans", sans-serif;
+}
+
+html, body, #root {
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-bright); border-radius: 2px; }
+
+::selection { background: var(--accent-glow); color: var(--accent); }

@@ -1,0 +1,45 @@
+{
+  "updatedAt": "2025-05-21T00:00:00Z",
+  "servers": [
+    {
+      "name": "@modelcontextprotocol/server-filesystem",
+      "description": "Read and write local files and directories",
+      "url": "https://github.com/modelcontextprotocol/servers",
+      "tags": ["filesystem", "official"],
+      "author": "Anthropic",
+      "license": "MIT"
+    },
+    {
+      "name": "@modelcontextprotocol/server-github",
+      "description": "Interact with GitHub repos, issues and PRs",
+      "url": "https://github.com/modelcontextprotocol/servers",
+      "tags": ["git", "github", "official"],
+      "author": "Anthropic",
+      "license": "MIT"
+    },
+    {
+      "name": "@modelcontextprotocol/server-postgres",
+      "description": "Query and inspect PostgreSQL databases",
+      "url": "https://github.com/modelcontextprotocol/servers",
+      "tags": ["database", "postgres", "official"],
+      "author": "Anthropic",
+      "license": "MIT"
+    },
+    {
+      "name": "@modelcontextprotocol/server-brave-search",
+      "description": "Web search via the Brave Search API",
+      "url": "https://github.com/modelcontextprotocol/servers",
+      "tags": ["search", "web", "official"],
+      "author": "Anthropic",
+      "license": "MIT"
+    },
+    {
+      "name": "@modelcontextprotocol/server-slack",
+      "description": "Post messages and read channels in Slack",
+      "url": "https://github.com/modelcontextprotocol/servers",
+      "tags": ["slack", "messaging", "official"],
+      "author": "Anthropic",
+      "license": "MIT"
+    }
+  ]
+}
