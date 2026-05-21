@@ -15,17 +15,16 @@ Opens at **http://localhost:4242**
 
 MCP servers are multiplying fast — there are hundreds of them. But figuring out what a server actually does means digging through GitHub READMEs and guessing at parameters.
 
-`mcp-man` connects to any MCP server, lists all its tools with full schemas, and lets you call them with custom arguments — right in the browser.
-
-Think of it like `man` pages, but for MCP.
+`mcp-man` connects to any MCP server, lists all its tools with full schemas, and lets you call them with custom arguments — right in the browser. Like `man` pages, but for MCP.
 
 ---
 
 ## Features
 
-- **Registry** — searchable catalog of 30+ real MCP servers
-- **Inspect** — connect to any server and see all tools, resources and prompts
+- **Registry** — searchable catalog of 156 real MCP servers
+- **Inspect** — connect to any server, see all tools with full schema visualizer
 - **Test** — call any tool with JSON arguments and see the live response
+- **Auth helper** — guided setup for servers that need API keys
 - **CLI** — all features available from the terminal too
 
 ---
@@ -35,10 +34,11 @@ Think of it like `man` pages, but for MCP.
 ### Web UI (recommended)
 
 ```bash
+npm install -g @aaglexx/mcp-man
 mcp-man ui
 ```
 
-Starts the API server and opens the browser automatically.
+Starts the API server on `:7070` and opens the browser at `http://localhost:4242`.
 
 ### CLI
 
@@ -47,53 +47,55 @@ Starts the API server and opens the browser automatically.
 mcp-man search github
 mcp-man search --tag database
 
-# Inspect a server
+# Inspect a server — list all tools, resources and prompts
 mcp-man inspect "npx -y @modelcontextprotocol/server-filesystem C:\path\to\dir"
 
-# Call a tool
+# Call a tool with arguments
 mcp-man test list_directory --server "npx -y @modelcontextprotocol/server-filesystem C:\path"
 ```
 
 ---
 
-## Examples
+## Servers that need no setup
 
-**Explore the filesystem server:**
+These work out of the box — just paste the command and hit inspect:
+
 ```
-Server: npx -y @modelcontextprotocol/server-filesystem C:\Users\you\Documents
+npx -y @modelcontextprotocol/server-memory
+npx -y @modelcontextprotocol/server-filesystem C:\Users\you\Documents
+npx -y mcp-server-time
+npx -y @modelcontextprotocol/server-everything
 ```
 
-**Explore the memory server (no config needed):**
-```
-Server: npx -y @modelcontextprotocol/server-memory
-```
+## Servers that need API keys
 
-**Explore the GitHub server (needs token):**
-```
-Server: GITHUB_PERSONAL_ACCESS_TOKEN=your_token npx -y @modelcontextprotocol/server-github
-```
+Click any server in the Registry — if it needs credentials, an auth wizard will guide you through it step by step with links to get each token.
+
+Examples:
+- `github-mcp-server` → needs `GITHUB_PERSONAL_ACCESS_TOKEN`
+- `@notionhq/notion-mcp-server` → needs Notion integration token
+- `@modelcontextprotocol/server-brave-search` → needs `BRAVE_API_KEY`
 
 ---
 
 ## Registry
 
-The registry lives in [`registry/servers.json`](./registry/servers.json). Currently includes:
+156 servers across categories:
 
-| Server | Tags |
-|--------|------|
-| `@modelcontextprotocol/server-filesystem` | filesystem, official |
-| `@modelcontextprotocol/server-github` | git, github, official |
-| `@modelcontextprotocol/server-postgres` | database, sql, official |
-| `@modelcontextprotocol/server-memory` | memory, official |
-| `@modelcontextprotocol/server-slack` | messaging, official |
-| `@playwright/mcp` | browser, automation |
-| `@notionhq/notion-mcp-server` | notion, productivity |
-| `@upstash/context7-mcp` | docs, developer |
-| and 22 more... | |
+| Category | Examples |
+|----------|---------|
+| **Official** | filesystem, git, github, memory, postgres, redis, slack |
+| **Databases** | MySQL, MongoDB, ClickHouse, Neo4j, Snowflake, Elasticsearch |
+| **Cloud** | AWS, GCP, Azure, Cloudflare, Vercel, Supabase, Firebase |
+| **Productivity** | Notion, Google Drive, Gmail, Calendar, Slack, Discord |
+| **AI/LLM** | OpenAI, Anthropic, Ollama, Replicate, LangChain, Pinecone |
+| **Dev tools** | Docker, Kubernetes, Sentry, Datadog, GitHub Actions, CircleCI |
+| **Search** | Brave, Tavily, Exa, Perplexity, Wikipedia, arXiv |
+| **Finance** | Stripe, Coinbase, Plaid, Alpha Vantage |
 
 ### Add your server
 
-Open a PR editing `registry/servers.json`:
+Open a PR editing [`registry/servers.json`](./registry/servers.json):
 
 ```json
 {
@@ -102,7 +104,15 @@ Open a PR editing `registry/servers.json`:
   "url": "https://github.com/you/your-server",
   "tags": ["your", "tags"],
   "author": "Your Name",
-  "license": "MIT"
+  "license": "MIT",
+  "env": [
+    {
+      "name": "YOUR_API_KEY",
+      "description": "API key from your-service.com/settings",
+      "required": true,
+      "url": "https://your-service.com/settings/api-keys"
+    }
+  ]
 }
 ```
 
@@ -115,22 +125,22 @@ mcp-man ui
     │
     ├── API server (localhost:7070)
     │       ├── GET  /api/search   — registry lookup
-    │       ├── POST /api/inspect  — connects to MCP server, lists tools
-    │       └── POST /api/test     — connects to MCP server, calls a tool
+    │       ├── POST /api/inspect  — spawns MCP server process, lists tools
+    │       └── POST /api/test     — spawns MCP server process, calls a tool
     │
     └── Web UI (localhost:4242)
-            └── React + Vite, served as static files
+            └── React app served as static files
 ```
 
-The API server spawns MCP servers as child processes on demand using the official `@modelcontextprotocol/sdk`, runs the requested operation, and closes the connection.
+MCP servers are spawned as child processes on demand using the official `@modelcontextprotocol/sdk`. The connection is opened, the operation is performed, and the process is closed — no persistent connections.
 
 ---
 
 ## Development
 
 ```bash
-git clone https://github.com/aaglexx/mvp-hub
-cd mvp-hub
+git clone https://github.com/aaglexx/mcp-man
+cd mcp-man
 npm install
 
 # Terminal 1 — API server
@@ -142,13 +152,14 @@ npm run dev:web
 
 Open http://localhost:4242
 
-### Build
-
 ```bash
+# Build for production
 npm run build
-```
 
-Compiles TypeScript CLI to `dist/` and builds React UI to `web/dist/`.
+# Publish to npm
+npm version patch
+npm publish --access public
+```
 
 ---
 
@@ -156,9 +167,10 @@ Compiles TypeScript CLI to `dist/` and builds React UI to `web/dist/`.
 
 - [x] CLI: search, inspect, test, add
 - [x] Web UI: registry browser, inspector, tool tester
-- [ ] Sandboxed runner (Docker/WASM) — no local install needed
-- [ ] Schema visualizer — interactive view of tool input/output types
-- [ ] Auth helper — guided setup for servers that need API keys
+- [x] Auth wizard — guided API key setup for 78 servers
+- [x] Schema visualizer — types, required/optional, nested objects
+- [x] 156 real MCP servers in registry
+- [ ] Sandboxed runner — test servers without local install (Docker/WASM)
 - [ ] `mcp-man badge` — CI badge showing server health status
 
 ---
