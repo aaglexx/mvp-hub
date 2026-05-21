@@ -216,6 +216,7 @@ export function startApiServer() {
       json(res, { error: "not found" }, 404);
     } catch (e) {
       const msg = e instanceof Error ? e.message : String(e);
+      console.error("API error:", msg);
       json(res, { error: msg }, 500);
     }
   });
