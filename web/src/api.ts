@@ -1,3 +1,10 @@
+export interface EnvVar {
+  name: string;
+  description: string;
+  required: boolean;
+  url?: string;
+}
+
 export interface MCPServer {
   name: string;
   description: string;
@@ -5,6 +12,7 @@ export interface MCPServer {
   tags: string[];
   author?: string;
   license?: string;
+  env?: EnvVar[];
 }
 
 export interface MCPTool {
@@ -28,8 +36,6 @@ export interface TestResult {
   content: { type: string; text?: string }[];
 }
 
-// In prod (served statically on :4242), API is on :7070
-// In dev (Vite proxy), API is proxied via /api
 const BASE =
   typeof window !== "undefined" && window.location.port === "4242"
     ? "http://localhost:7070/api"

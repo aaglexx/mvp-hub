@@ -1,6 +1,7 @@
 import { useState, useCallback } from "react";
 import type { MCPServer, MCPTool, InspectResult } from "./api";
 import { searchServers, inspectServer, callTool } from "./api";
+import { AuthWizard } from "./AuthWizard";
 import "./App.css";
 
 type View = "registry" | "inspect" | "test";
@@ -12,6 +13,7 @@ export default function App() {
   const [query, setQuery] = useState("");
   const [servers, setServers] = useState<MCPServer[]>([]);
   const [searching, setSearching] = useState(false);
+  const [wizardServer, setWizardServer] = useState<MCPServer | null>(null);
 
   // Inspect
   const [inspectCmd, setInspectCmd] = useState("");
@@ -39,15 +41,18 @@ export default function App() {
     }
   }, [query]);
 
-  const doInspect = useCallback(async () => {
-    if (!inspectCmd.trim()) return;
+  const doInspect = useCallback(async (cmd?: string) => {
+    const command = cmd ?? inspectCmd;
+    if (!command.trim()) return;
+    if (cmd) setInspectCmd(cmd);
     setInspecting(true);
     setInspectResult(null);
     setInspectError("");
+    setView("inspect");
     try {
-      const res = await inspectServer(inspectCmd);
+      const res = await inspectServer(command);
       setInspectResult(res);
-      setTestCmd(inspectCmd);
+      setTestCmd(command);
     } catch (e) {
       setInspectError(String(e));
     } finally {
@@ -62,7 +67,7 @@ export default function App() {
     setTestError("");
     let args: Record<string, unknown> = {};
     try {
-      args = JSON.parse(toolArgs);
+      args = JSON.parse(toolArgs || "{}");
     } catch {
       setTestError("Invalid JSON in args");
       setTesting(false);
@@ -82,8 +87,27 @@ export default function App() {
     }
   }, [testCmd, selectedTool, toolArgs]);
 
+  function handleServerClick(s: MCPServer) {
+    if (s.env && s.env.length > 0) {
+      setWizardServer(s);
+    } else {
+      doInspect(`npx -y ${s.name}`);
+    }
+  }
+
   return (
     <div className="shell">
+      {wizardServer && (
+        <AuthWizard
+          server={wizardServer}
+          onConnect={(cmd) => {
+            setWizardServer(null);
+            doInspect(cmd);
+          }}
+          onCancel={() => setWizardServer(null)}
+        />
+      )}
+
       <header className="topbar">
         <div className="logo">
           <span className="logo-prefix">$</span>
@@ -108,7 +132,7 @@ export default function App() {
           <section className="panel">
             <div className="panel-header">
               <h2 className="panel-title">Registry</h2>
-              <p className="panel-sub">Search available MCP servers</p>
+              <p className="panel-sub">Search {servers.length > 0 ? `${servers.length} of 184` : "184"} MCP servers — click any to inspect</p>
             </div>
             <div className="search-row">
               <span className="prompt-sym">›</span>
@@ -126,20 +150,20 @@ export default function App() {
             </div>
             <div className="results">
               {servers.length === 0 && !searching && (
-                <div className="empty">Press search to load the registry</div>
+                <div className="empty">Press search or Enter to load all servers</div>
               )}
               {servers.map((s) => (
                 <div
                   key={s.name}
                   className="server-card"
-                  onClick={() => {
-                    setInspectCmd(`npx -y ${s.name}`);
-                    setView("inspect");
-                  }}
+                  onClick={() => handleServerClick(s)}
                 >
                   <div className="server-top">
                     <span className="server-name">{s.name}</span>
                     <div className="server-tags">
+                      {s.env && s.env.length > 0 && (
+                        <span className="tag tag-auth">🔑 auth required</span>
+                      )}
                       {s.tags.map((t) => (
                         <span key={t} className="tag">{t}</span>
                       ))}
@@ -169,11 +193,14 @@ export default function App() {
                 onKeyDown={(e) => e.key === "Enter" && doInspect()}
                 autoFocus
               />
-              <button className="run-btn" onClick={doInspect} disabled={inspecting}>
+              <button className="run-btn" onClick={() => doInspect()} disabled={inspecting}>
                 {inspecting ? "connecting..." : "inspect"}
               </button>
             </div>
             {inspectError && <div className="error-box">{inspectError}</div>}
+            {inspecting && (
+              <div className="empty">Connecting to server...</div>
+            )}
             {inspectResult && (
               <div className="inspect-results">
                 <div className="section-label">
@@ -240,9 +267,7 @@ export default function App() {
                 <input
                   className="cmd-input full"
                   value={selectedTool?.name ?? ""}
-                  onChange={(e) =>
-                    setSelectedTool({ name: e.target.value })
-                  }
+                  onChange={(e) => setSelectedTool({ name: e.target.value })}
                   placeholder="tool_name"
                 />
                 <label className="field-label">Arguments (JSON)</label>
@@ -252,6 +277,7 @@ export default function App() {
                   onChange={(e) => setToolArgs(e.target.value)}
                   rows={8}
                   spellCheck={false}
+                  placeholder="{}"
                 />
                 <button className="run-btn wide" onClick={doTest} disabled={testing}>
                   {testing ? "calling..." : "▶ run"}
@@ -260,6 +286,17 @@ export default function App() {
               <div className="test-right">
                 <label className="field-label">Result</label>
                 {testError && <div className="error-box">{testError}</div>}
+                <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 6 }}>
+                  {testResult && (
+                    <button
+                      className="cancel-btn"
+                      style={{ fontSize: 11, padding: "4px 12px" }}
+                      onClick={() => navigator.clipboard.writeText(testResult)}
+                    >
+                      copy
+                    </button>
+                  )}
+                </div>
                 <pre className="result-box">{testResult || "// output will appear here"}</pre>
               </div>
             </div>
