@@ -1,6 +1,6 @@
 {
   "name": "@aaglexx/mcp-man",
-  "version": "0.1.22",
+  "version": "0.1.23",
   "description": "Registry and inspector for MCP servers — search, inspect, test from CLI or browser",
   "type": "module",
   "bin": {
@@ -11,7 +11,7 @@
     "dist",
     "web/dist",
     "registry"
-],
+  ],
   "scripts": {
     "build:cli": "tsc && npm run postbuild:cli",
     "build": "npm run build:cli && vite build --config vite.config.ts",
