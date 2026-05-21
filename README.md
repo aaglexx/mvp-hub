@@ -1,6 +1,7 @@
 [![npm version](https://img.shields.io/npm/v/@aaglexx/mcp-man)](https://www.npmjs.com/package/@aaglexx/mcp-man)
 [![npm downloads](https://img.shields.io/npm/dm/@aaglexx/mcp-man)](https://www.npmjs.com/package/@aaglexx/mcp-man)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
+[![SafeSkill 90/100](https://img.shields.io/badge/SafeSkill-90%2F100_Verified%20Safe-brightgreen)](https://safeskill.dev/scan/aaglexx-mcp-man)
 
 # mcp-man
 
