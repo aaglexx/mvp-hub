@@ -15,10 +15,31 @@ export interface MCPServer {
   env?: EnvVar[];
 }
 
+export interface SchemaProperty {
+  type?: string | string[];
+  description?: string;
+  enum?: unknown[];
+  default?: unknown;
+  items?: SchemaProperty;
+  properties?: Record<string, SchemaProperty>;
+  required?: string[];
+  minimum?: number;
+  maximum?: number;
+  minLength?: number;
+  maxLength?: number;
+}
+
+export interface MCPToolSchema {
+  type?: string;
+  properties?: Record<string, SchemaProperty>;
+  required?: string[];
+  description?: string;
+}
+
 export interface MCPTool {
   name: string;
   description?: string;
-  inputSchema?: { properties?: Record<string, unknown> };
+  inputSchema?: MCPToolSchema;
 }
 
 export interface MCPResource {
@@ -79,4 +100,43 @@ export async function callTool(
     body: JSON.stringify({ command, tool, args }),
   });
   return res.json();
+}
+
+// Build a stub JSON args object from a tool schema
+export function buildStub(tool: MCPTool): string {
+  const props = tool.inputSchema?.properties ?? {};
+  const required = tool.inputSchema?.required ?? [];
+
+  const stub: Record<string, unknown> = {};
+
+  for (const [k, v] of Object.entries(props)) {
+    const prop = v as SchemaProperty;
+
+    // Use default if provided
+    if (prop.default !== undefined) {
+      stub[k] = prop.default;
+      continue;
+    }
+
+    // Determine type
+    const rawType = prop.type;
+    const type = Array.isArray(rawType)
+      ? (rawType.find((t) => t !== "null") ?? "string")
+      : (rawType ?? "string");
+
+    // Use enum first value if available
+    if (prop.enum && prop.enum.length > 0) {
+      stub[k] = prop.enum[0];
+      continue;
+    }
+
+    // Type-appropriate defaults
+    if (type === "number" || type === "integer") stub[k] = required.includes(k) ? 1 : 0;
+    else if (type === "boolean") stub[k] = false;
+    else if (type === "array") stub[k] = [];
+    else if (type === "object") stub[k] = {};
+    else stub[k] = ""; // string / any / unknown
+  }
+
+  return JSON.stringify(stub, null, 2);
 }

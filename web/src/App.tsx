@@ -1,7 +1,8 @@
 import { useState, useCallback } from "react";
 import type { MCPServer, MCPTool, InspectResult } from "./api";
-import { searchServers, inspectServer, callTool } from "./api";
+import { searchServers, inspectServer, callTool, buildStub } from "./api";
 import { AuthWizard } from "./AuthWizard";
+import { SchemaViewer } from "./SchemaViewer";
 import "./App.css";
 
 type View = "registry" | "inspect" | "test";
@@ -20,10 +21,11 @@ export default function App() {
   const [inspecting, setInspecting] = useState(false);
   const [inspectResult, setInspectResult] = useState<InspectResult | null>(null);
   const [inspectError, setInspectError] = useState("");
+  const [activeTool, setActiveTool] = useState<MCPTool | null>(null);
 
   // Test
   const [testCmd, setTestCmd] = useState("");
-  const [selectedTool, setSelectedTool] = useState<MCPTool | null>(null);
+  const [testTool, setTestTool] = useState<MCPTool | null>(null);
   const [toolArgs, setToolArgs] = useState("{}");
   const [testResult, setTestResult] = useState("");
   const [testing, setTesting] = useState(false);
@@ -42,26 +44,38 @@ export default function App() {
   }, [query]);
 
   const doInspect = useCallback(async (cmd?: string) => {
-    const command = cmd ?? inspectCmd;
-    if (!command.trim()) return;
-    if (cmd) setInspectCmd(cmd);
+    const command = (cmd ?? inspectCmd).trim();
+    if (!command) return;
+    setInspectCmd(command);
     setInspecting(true);
     setInspectResult(null);
     setInspectError("");
+    setActiveTool(null);
     setView("inspect");
     try {
       const res = await inspectServer(command);
       setInspectResult(res);
       setTestCmd(command);
+      // Auto-select first tool
+      if (res.tools.length > 0) setActiveTool(res.tools[0]);
     } catch (e) {
-      setInspectError(String(e));
+      setInspectError(e instanceof Error ? e.message : String(e));
     } finally {
       setInspecting(false);
     }
   }, [inspectCmd]);
 
+  const goToTest = useCallback((tool: MCPTool, cmd: string) => {
+    setTestTool(tool);
+    setTestCmd(cmd);
+    setToolArgs(buildStub(tool));
+    setTestResult("");
+    setTestError("");
+    setView("test");
+  }, []);
+
   const doTest = useCallback(async () => {
-    if (!testCmd || !selectedTool) return;
+    if (!testCmd.trim() || !testTool) return;
     setTesting(true);
     setTestResult("");
     setTestError("");
@@ -69,23 +83,23 @@ export default function App() {
     try {
       args = JSON.parse(toolArgs || "{}");
     } catch {
-      setTestError("Invalid JSON in args");
+      setTestError("Invalid JSON — check your arguments");
       setTesting(false);
       return;
     }
     try {
-      const res = await callTool(testCmd, selectedTool.name, args);
+      const res = await callTool(testCmd, testTool.name, args);
       const text = res.content
         .filter((b) => b.type === "text")
-        .map((b) => b.text)
+        .map((b) => b.text ?? "")
         .join("\n");
       setTestResult(text || JSON.stringify(res.content, null, 2));
     } catch (e) {
-      setTestError(String(e));
+      setTestError(e instanceof Error ? e.message : String(e));
     } finally {
       setTesting(false);
     }
-  }, [testCmd, selectedTool, toolArgs]);
+  }, [testCmd, testTool, toolArgs]);
 
   function handleServerClick(s: MCPServer) {
     if (s.env && s.env.length > 0) {
@@ -100,10 +114,7 @@ export default function App() {
       {wizardServer && (
         <AuthWizard
           server={wizardServer}
-          onConnect={(cmd) => {
-            setWizardServer(null);
-            doInspect(cmd);
-          }}
+          onConnect={(cmd) => { setWizardServer(null); doInspect(cmd); }}
           onCancel={() => setWizardServer(null)}
         />
       )}
@@ -128,11 +139,15 @@ export default function App() {
       </header>
 
       <main className="main">
+
+        {/* ── REGISTRY ── */}
         {view === "registry" && (
           <section className="panel">
             <div className="panel-header">
               <h2 className="panel-title">Registry</h2>
-              <p className="panel-sub">Search {servers.length > 0 ? `${servers.length} of 184` : "184"} MCP servers — click any to inspect</p>
+              <p className="panel-sub">
+                {servers.length > 0 ? `${servers.length} servers found` : "156 MCP servers"} — click any to inspect
+              </p>
             </div>
             <div className="search-row">
               <span className="prompt-sym">›</span>
@@ -153,16 +168,12 @@ export default function App() {
                 <div className="empty">Press search or Enter to load all servers</div>
               )}
               {servers.map((s) => (
-                <div
-                  key={s.name}
-                  className="server-card"
-                  onClick={() => handleServerClick(s)}
-                >
+                <div key={s.name} className="server-card" onClick={() => handleServerClick(s)}>
                   <div className="server-top">
                     <span className="server-name">{s.name}</span>
                     <div className="server-tags">
                       {s.env && s.env.length > 0 && (
-                        <span className="tag tag-auth">🔑 auth required</span>
+                        <span className="tag tag-auth">🔑 auth</span>
                       )}
                       {s.tags.map((t) => (
                         <span key={t} className="tag">{t}</span>
@@ -177,11 +188,12 @@ export default function App() {
           </section>
         )}
 
+        {/* ── INSPECT ── */}
         {view === "inspect" && (
           <section className="panel">
             <div className="panel-header">
               <h2 className="panel-title">Inspect</h2>
-              <p className="panel-sub">Connect to an MCP server and explore its tools</p>
+              <p className="panel-sub">Click a tool to see its schema, then test it</p>
             </div>
             <div className="search-row">
               <span className="prompt-sym">›</span>
@@ -197,57 +209,77 @@ export default function App() {
                 {inspecting ? "connecting..." : "inspect"}
               </button>
             </div>
+
             {inspectError && <div className="error-box">{inspectError}</div>}
-            {inspecting && (
-              <div className="empty">Connecting to server...</div>
-            )}
+            {inspecting && <div className="empty">Connecting to server...</div>}
+
             {inspectResult && (
-              <div className="inspect-results">
-                <div className="section-label">
-                  tools <span className="count">{inspectResult.tools.length}</span>
-                </div>
-                <div className="tool-grid">
-                  {inspectResult.tools.map((tool) => (
-                    <div
-                      key={tool.name}
-                      className="tool-card"
-                      onClick={() => {
-                        setSelectedTool(tool);
-                        const params = Object.keys(tool.inputSchema?.properties ?? {});
-                        const stub: Record<string, string> = {};
-                        params.forEach((p) => (stub[p] = ""));
-                        setToolArgs(JSON.stringify(stub, null, 2));
-                        setView("test");
-                      }}
-                    >
-                      <div className="tool-name">{tool.name}</div>
-                      <div className="tool-desc">{tool.description ?? "—"}</div>
-                      {Object.keys(tool.inputSchema?.properties ?? {}).length > 0 && (
-                        <div className="tool-params">
-                          {Object.keys(tool.inputSchema!.properties!).join(", ")}
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-                {inspectResult.resources.length > 0 && (
-                  <>
-                    <div className="section-label">
-                      resources <span className="count">{inspectResult.resources.length}</span>
-                    </div>
-                    {inspectResult.resources.map((r) => (
-                      <div key={r.uri} className="resource-row">
-                        <span className="resource-name">{r.name}</span>
-                        <span className="resource-uri">{r.uri}</span>
+              <div className="inspect-layout">
+                {/* Left: tool list */}
+                <div className="inspect-left">
+                  <div className="section-label">
+                    tools <span className="count">{inspectResult.tools.length}</span>
+                  </div>
+                  <div className="tool-list">
+                    {inspectResult.tools.map((tool) => (
+                      <div
+                        key={tool.name}
+                        className={`tool-list-item ${activeTool?.name === tool.name ? "active" : ""}`}
+                        onClick={() => setActiveTool(tool)}
+                      >
+                        <div className="tool-list-name">{tool.name}</div>
+                        {tool.description && (
+                          <div className="tool-list-desc">{tool.description}</div>
+                        )}
                       </div>
                     ))}
-                  </>
-                )}
+                  </div>
+
+                  {inspectResult.resources.length > 0 && (
+                    <>
+                      <div className="section-label" style={{ marginTop: 20 }}>
+                        resources <span className="count">{inspectResult.resources.length}</span>
+                      </div>
+                      {inspectResult.resources.map((r) => (
+                        <div key={r.name + r.uri} className="resource-row">
+                          <span className="resource-name">{r.name}</span>
+                          <span className="resource-uri">{r.uri}</span>
+                        </div>
+                      ))}
+                    </>
+                  )}
+                </div>
+
+                {/* Right: schema */}
+                <div className="inspect-right">
+                  {activeTool ? (
+                    <>
+                      <SchemaViewer
+                        name={activeTool.name}
+                        schema={activeTool.inputSchema}
+                        description={activeTool.description}
+                      />
+                      <button
+                        className="run-btn"
+                        style={{ marginTop: 12, width: "100%", padding: "10px" }}
+                        onClick={() => goToTest(activeTool, inspectCmd)}
+                      >
+                        Test this tool →
+                      </button>
+                    </>
+                  ) : (
+                    <div className="schema-placeholder">
+                      <span>←</span>
+                      <p>Select a tool to see its schema</p>
+                    </div>
+                  )}
+                </div>
               </div>
             )}
           </section>
         )}
 
+        {/* ── TEST ── */}
         {view === "test" && (
           <section className="panel">
             <div className="panel-header">
@@ -266,8 +298,8 @@ export default function App() {
                 <label className="field-label">Tool</label>
                 <input
                   className="cmd-input full"
-                  value={selectedTool?.name ?? ""}
-                  onChange={(e) => setSelectedTool({ name: e.target.value })}
+                  value={testTool?.name ?? ""}
+                  onChange={(e) => setTestTool({ name: e.target.value })}
                   placeholder="tool_name"
                 />
                 <label className="field-label">Arguments (JSON)</label>
@@ -279,29 +311,36 @@ export default function App() {
                   spellCheck={false}
                   placeholder="{}"
                 />
-                <button className="run-btn wide" onClick={doTest} disabled={testing}>
+                <button
+                  className="run-btn wide"
+                  onClick={doTest}
+                  disabled={testing || !testCmd.trim() || !testTool?.name}
+                >
                   {testing ? "calling..." : "▶ run"}
                 </button>
               </div>
               <div className="test-right">
-                <label className="field-label">Result</label>
-                {testError && <div className="error-box">{testError}</div>}
-                <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 6 }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
+                  <label className="field-label" style={{ margin: 0 }}>Result</label>
                   {testResult && (
                     <button
                       className="cancel-btn"
-                      style={{ fontSize: 11, padding: "4px 12px" }}
+                      style={{ fontSize: 11, padding: "3px 10px" }}
                       onClick={() => navigator.clipboard.writeText(testResult)}
                     >
                       copy
                     </button>
                   )}
                 </div>
-                <pre className="result-box">{testResult || "// output will appear here"}</pre>
+                {testError && <div className="error-box">{testError}</div>}
+                <pre className="result-box">
+                  {testResult || "// output will appear here"}
+                </pre>
               </div>
             </div>
           </section>
         )}
+
       </main>
     </div>
   );
