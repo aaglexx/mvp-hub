@@ -11,15 +11,23 @@
     },
     {
       "name": "@modelcontextprotocol/server-github",
-      "description": "Interact with GitHub repos, issues, PRs, code search and workflow management",
+      "description": "GitHub API — repos, issues, PRs, code search, workflows",
       "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/github",
       "tags": ["git", "github", "official", "devops"],
       "author": "Anthropic",
       "license": "MIT"
     },
     {
+      "name": "@modelcontextprotocol/server-gitlab",
+      "description": "GitLab platform integration for project management and CI/CD",
+      "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/gitlab",
+      "tags": ["git", "gitlab", "official", "devops"],
+      "author": "Anthropic",
+      "license": "MIT"
+    },
+    {
       "name": "@modelcontextprotocol/server-postgres",
-      "description": "Connect to PostgreSQL — run queries, inspect schemas, analyze data",
+      "description": "Connect to PostgreSQL — queries, schema inspection, data analysis",
       "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/postgres",
       "tags": ["database", "postgres", "official", "sql"],
       "author": "Anthropic",
@@ -35,14 +43,14 @@
     },
     {
       "name": "@modelcontextprotocol/server-brave-search",
-      "description": "Web search via Brave Search API — get current results without a browser",
+      "description": "Web and local search via Brave Search API",
       "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/brave-search",
       "tags": ["search", "web", "official"],
       "author": "Anthropic",
       "license": "MIT"
     },
     {
-      "name": "@modelcontextprotocol/server-fetch",
+      "name": "mcp-server-fetch",
       "description": "Fetch any URL and convert web content to clean markdown for LLM consumption",
       "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/fetch",
       "tags": ["web", "fetch", "official", "scraping"],
@@ -66,8 +74,8 @@
       "license": "MIT"
     },
     {
-      "name": "@modelcontextprotocol/server-git",
-      "description": "Read, search and manipulate Git repositories — log, diff, blame, commit",
+      "name": "mcp-server-git",
+      "description": "Read, search and manipulate Git repos — log, diff, blame, commit",
       "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/git",
       "tags": ["git", "vcs", "official", "devops"],
       "author": "Anthropic",
@@ -83,7 +91,7 @@
     },
     {
       "name": "@modelcontextprotocol/server-google-maps",
-      "description": "Google Maps integration — geocoding, directions, place search, distance matrix",
+      "description": "Google Maps — geocoding, directions, place search, distance matrix",
       "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/google-maps",
       "tags": ["maps", "google", "official", "location"],
       "author": "Anthropic",
@@ -99,9 +107,41 @@
     },
     {
       "name": "@modelcontextprotocol/server-puppeteer",
-      "description": "Browser automation with Puppeteer — screenshot, click, fill forms, scrape JS-rendered pages",
+      "description": "Browser automation with Puppeteer — screenshot, click, fill forms, scrape JS pages",
       "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/puppeteer",
       "tags": ["browser", "automation", "scraping", "official"],
+      "author": "Anthropic",
+      "license": "MIT"
+    },
+    {
+      "name": "@modelcontextprotocol/server-redis",
+      "description": "Interact with Redis — get, set, list keys, pub/sub",
+      "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/redis",
+      "tags": ["redis", "database", "cache", "official"],
+      "author": "Anthropic",
+      "license": "MIT"
+    },
+    {
+      "name": "@modelcontextprotocol/server-sequential-thinking",
+      "description": "Dynamic problem-solving through sequential thinking and reflection",
+      "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/sequentialthinking",
+      "tags": ["reasoning", "thinking", "official", "ai"],
+      "author": "Anthropic",
+      "license": "MIT"
+    },
+    {
+      "name": "@modelcontextprotocol/server-everything",
+      "description": "Reference/test server with prompts, resources, and tools — great for testing MCP clients",
+      "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/everything",
+      "tags": ["testing", "reference", "official"],
+      "author": "Anthropic",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-time",
+      "description": "Time and timezone tools — current time, conversions, scheduling helpers",
+      "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/time",
+      "tags": ["time", "timezone", "official", "utility"],
       "author": "Anthropic",
       "license": "MIT"
     },
@@ -114,8 +154,16 @@
       "license": "Apache-2.0"
     },
     {
+      "name": "github-mcp-server",
+      "description": "Official GitHub MCP server — full GitHub API with 80+ tools",
+      "url": "https://github.com/github/github-mcp-server",
+      "tags": ["git", "github", "official", "devops"],
+      "author": "GitHub",
+      "license": "MIT"
+    },
+    {
       "name": "@notionhq/notion-mcp-server",
-      "description": "Official Notion MCP — read and write pages, databases, blocks in your workspace",
+      "description": "Official Notion MCP — read and write pages, databases, blocks",
       "url": "https://github.com/makenotion/notion-mcp-server",
       "tags": ["notion", "productivity", "notes", "official"],
       "author": "Notion",
@@ -130,14 +178,6 @@
       "license": "MIT"
     },
     {
-      "name": "mcp-server-linear",
-      "description": "Manage Linear issues, projects and cycles — create, update, search tickets",
-      "url": "https://github.com/jerhadf/linear-mcp-server",
-      "tags": ["linear", "project-management", "productivity"],
-      "author": "community",
-      "license": "MIT"
-    },
-    {
       "name": "@upstash/context7-mcp",
       "description": "Fetch up-to-date library docs and code examples directly into your AI context",
       "url": "https://github.com/upstash/context7",
@@ -146,19 +186,43 @@
       "license": "MIT"
     },
     {
+      "name": "mcp-server-stripe",
+      "description": "Stripe payments API — customers, charges, subscriptions, invoices",
+      "url": "https://github.com/stripe/agent-toolkit",
+      "tags": ["stripe", "payments", "finance"],
+      "author": "Stripe",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-qdrant",
+      "description": "Vector search with Qdrant — store and retrieve semantic memories for AI agents",
+      "url": "https://github.com/qdrant/mcp-server-qdrant",
+      "tags": ["vector-db", "rag", "memory", "search"],
+      "author": "Qdrant",
+      "license": "Apache-2.0"
+    },
+    {
+      "name": "@e2b/mcp-server",
+      "description": "Secure cloud sandbox for AI code execution — isolated containers via E2B",
+      "url": "https://github.com/e2b-dev/mcp-server",
+      "tags": ["sandbox", "code-execution", "cloud"],
+      "author": "E2B",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-linear",
+      "description": "Manage Linear issues, projects and cycles — create, update, search tickets",
+      "url": "https://github.com/jerhadf/linear-mcp-server",
+      "tags": ["linear", "project-management", "productivity"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
       "name": "mcp-server-docker",
       "description": "Manage Docker containers, images and volumes through natural language",
       "url": "https://github.com/ckreiling/mcp-server-docker",
       "tags": ["docker", "devops", "containers"],
       "author": "community",
-      "license": "MIT"
-    },
-    {
-      "name": "@modelcontextprotocol/server-redis",
-      "description": "Interact with Redis — get, set, list keys, pub/sub and more",
-      "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/redis",
-      "tags": ["redis", "database", "cache", "official"],
-      "author": "Anthropic",
       "license": "MIT"
     },
     {
@@ -178,7 +242,7 @@
       "license": "MIT"
     },
     {
-      "name": "mcp-server-figma",
+      "name": "figma-mcp",
       "description": "Access Figma files, components and design tokens from your AI assistant",
       "url": "https://github.com/GLips/Figma-Context-MCP",
       "tags": ["figma", "design", "ui"],
@@ -192,22 +256,6 @@
       "tags": ["jira", "project-management", "productivity"],
       "author": "community",
       "license": "MIT"
-    },
-    {
-      "name": "mcp-server-stripe",
-      "description": "Stripe payments API — customers, charges, subscriptions, invoices",
-      "url": "https://github.com/stripe/agent-toolkit",
-      "tags": ["stripe", "payments", "finance"],
-      "author": "Stripe",
-      "license": "MIT"
-    },
-    {
-      "name": "mcp-qdrant",
-      "description": "Vector search with Qdrant — store and retrieve semantic memories for AI agents",
-      "url": "https://github.com/qdrant/mcp-server-qdrant",
-      "tags": ["vector-db", "rag", "memory", "search"],
-      "author": "Qdrant",
-      "license": "Apache-2.0"
     },
     {
       "name": "mcp-server-mysql",
@@ -238,6 +286,1190 @@
       "description": "Turn any OpenAPI spec into an MCP server — call any REST API with tools",
       "url": "https://github.com/janwilmake/openapi-mcp-server",
       "tags": ["openapi", "rest", "api", "developer"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-neon",
+      "description": "Neon serverless Postgres — create branches, run queries, manage databases",
+      "url": "https://github.com/neondatabase/mcp-server-neon",
+      "tags": ["database", "postgres", "serverless", "neon"],
+      "author": "Neon",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-cloudflare",
+      "description": "Manage Cloudflare Workers, KV, D1, R2 and other services",
+      "url": "https://github.com/cloudflare/mcp-server-cloudflare",
+      "tags": ["cloudflare", "cloud", "devops", "serverless"],
+      "author": "Cloudflare",
+      "license": "MIT"
+    },
+    {
+      "name": "@supabase/mcp-server-supabase",
+      "description": "Supabase database, auth, storage and edge functions management",
+      "url": "https://github.com/supabase-community/supabase-mcp",
+      "tags": ["supabase", "database", "postgres", "cloud"],
+      "author": "Supabase",
+      "license": "MIT"
+    },
+    {
+      "name": "mongodb-mcp-server",
+      "description": "Query and analyze MongoDB collections with natural language",
+      "url": "https://github.com/mongodb-js/mongodb-mcp-server",
+      "tags": ["database", "mongodb", "nosql"],
+      "author": "MongoDB",
+      "license": "Apache-2.0"
+    },
+    {
+      "name": "mcp-server-terraform",
+      "description": "Manage Terraform workspaces, runs, variables via Terraform Cloud API",
+      "url": "https://github.com/severity1/terraform-cloud-mcp",
+      "tags": ["terraform", "devops", "cloud", "iac"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "aws-mcp-server",
+      "description": "Interact with AWS services — EC2, S3, Lambda, CloudWatch and more",
+      "url": "https://github.com/RafalWilinski/aws-mcp",
+      "tags": ["aws", "cloud", "devops"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-gcp",
+      "description": "Google Cloud Platform tools — GCS, BigQuery, Cloud Run, Compute Engine",
+      "url": "https://github.com/rusiaaman/wcgw",
+      "tags": ["gcp", "google", "cloud", "devops"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-azure-devops",
+      "description": "Azure DevOps — work items, repos, pipelines and test plans",
+      "url": "https://github.com/Tiberriver256/mcp-server-azure-devops",
+      "tags": ["azure", "devops", "microsoft", "ci-cd"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-datadog",
+      "description": "Query Datadog metrics, logs, monitors and dashboards",
+      "url": "https://github.com/winor30/mcp-server-datadog",
+      "tags": ["datadog", "monitoring", "observability", "devops"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-pagerduty",
+      "description": "Manage PagerDuty incidents, services and on-call schedules",
+      "url": "https://github.com/wpflager/pagerduty-mcp-server",
+      "tags": ["pagerduty", "monitoring", "incidents", "devops"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-grafana",
+      "description": "Query Grafana dashboards and Loki logs",
+      "url": "https://github.com/grafana/mcp-grafana",
+      "tags": ["grafana", "monitoring", "dashboards", "observability"],
+      "author": "Grafana",
+      "license": "Apache-2.0"
+    },
+    {
+      "name": "mcp-server-prometheus",
+      "description": "Query Prometheus metrics and alerts",
+      "url": "https://github.com/punkpeye/mcp-prometheus",
+      "tags": ["prometheus", "monitoring", "metrics", "devops"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-elasticsearch",
+      "description": "Search and analyze data in Elasticsearch indices",
+      "url": "https://github.com/cr7258/elasticsearch-mcp-server",
+      "tags": ["elasticsearch", "search", "database"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-neo4j",
+      "description": "Query and manage Neo4j graph databases with Cypher",
+      "url": "https://github.com/neo4j-labs/mcp-neo4j",
+      "tags": ["neo4j", "database", "graph"],
+      "author": "Neo4j",
+      "license": "Apache-2.0"
+    },
+    {
+      "name": "mcp-server-clickhouse",
+      "description": "Query ClickHouse analytical database — fast OLAP queries",
+      "url": "https://github.com/ClickHouse/mcp-clickhouse",
+      "tags": ["clickhouse", "database", "analytics", "olap"],
+      "author": "ClickHouse",
+      "license": "Apache-2.0"
+    },
+    {
+      "name": "mcp-server-snowflake",
+      "description": "Query Snowflake data warehouse — SQL queries and schema exploration",
+      "url": "https://github.com/datawiz168/mcp-snowflake-service",
+      "tags": ["snowflake", "database", "analytics", "warehouse"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-bigquery",
+      "description": "BigQuery read-only SQL queries and schema exploration",
+      "url": "https://github.com/LucasHild/mcp-server-bigquery",
+      "tags": ["bigquery", "google", "database", "analytics"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-hubspot",
+      "description": "HubSpot CRM — contacts, companies, deals, tickets and marketing data",
+      "url": "https://github.com/buger/mcp-hubspot",
+      "tags": ["hubspot", "crm", "marketing", "sales"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-salesforce",
+      "description": "Salesforce CRM — query objects, create records, run SOQL",
+      "url": "https://github.com/amjadali-110/mcp-salesforce",
+      "tags": ["salesforce", "crm", "sales"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-zendesk",
+      "description": "Zendesk support — tickets, users, organizations and knowledge base",
+      "url": "https://github.com/cloudflare/zendesk-mcp-server",
+      "tags": ["zendesk", "support", "crm"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-intercom",
+      "description": "Intercom conversations, users and help center articles",
+      "url": "https://github.com/raoulbia-ai/mcp-server-for-intercom",
+      "tags": ["intercom", "support", "crm", "chat"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-gmail",
+      "description": "Read, send and manage Gmail messages and threads",
+      "url": "https://github.com/googleworkspace/google-workspace-mcp",
+      "tags": ["gmail", "email", "google", "productivity"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-outlook",
+      "description": "Microsoft Outlook email and calendar via Graph API",
+      "url": "https://github.com/merill/microsoft-mcp",
+      "tags": ["outlook", "email", "microsoft", "productivity"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-google-calendar",
+      "description": "Google Calendar — create, read and manage events and schedules",
+      "url": "https://github.com/nspady/google-calendar-mcp",
+      "tags": ["calendar", "google", "productivity", "scheduling"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-discord",
+      "description": "Send messages and read channels in Discord servers",
+      "url": "https://github.com/v-3/discordmcp",
+      "tags": ["discord", "messaging", "community"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-telegram",
+      "description": "Send and receive Telegram messages via Bot API",
+      "url": "https://github.com/chigwell/telegram-mcp-server",
+      "tags": ["telegram", "messaging"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-twitter",
+      "description": "Post tweets, read timelines and search Twitter/X",
+      "url": "https://github.com/EnesCinr/twitter-mcp",
+      "tags": ["twitter", "social-media", "x"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-linkedin",
+      "description": "Read LinkedIn profile and company data",
+      "url": "https://github.com/adhikasp/mcp-linkedin",
+      "tags": ["linkedin", "social-media", "professional"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-github-actions",
+      "description": "Trigger and monitor GitHub Actions workflows",
+      "url": "https://github.com/ko1ynnky/github-actions-mcp-server",
+      "tags": ["github", "ci-cd", "devops", "automation"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-circleci",
+      "description": "Manage CircleCI pipelines, jobs and artifacts",
+      "url": "https://github.com/CircleCI-Public/mcp-server-circleci",
+      "tags": ["circleci", "ci-cd", "devops"],
+      "author": "CircleCI",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-jenkins",
+      "description": "Trigger Jenkins builds and query job status",
+      "url": "https://github.com/torresashjian/jenkins-mcp-server",
+      "tags": ["jenkins", "ci-cd", "devops", "automation"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-npm",
+      "description": "Search npm registry, get package info and audit dependencies",
+      "url": "https://github.com/maikCyphlock/npm-mcp",
+      "tags": ["npm", "nodejs", "packages", "developer"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-pypi",
+      "description": "Search PyPI packages, get metadata and version history",
+      "url": "https://github.com/abhiz123/mcp-pypi",
+      "tags": ["pypi", "python", "packages", "developer"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-vscode",
+      "description": "Interact with VS Code — open files, run commands, manage extensions",
+      "url": "https://github.com/paradoxtool/vscode-mcp-server",
+      "tags": ["vscode", "ide", "developer", "automation"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-playwright-browser",
+      "description": "Full browser control with Playwright — navigate, interact, extract data",
+      "url": "https://github.com/executeautomation/mcp-playwright",
+      "tags": ["browser", "playwright", "scraping", "testing"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-puppeteer-extra",
+      "description": "Enhanced Puppeteer with stealth mode for scraping protected pages",
+      "url": "https://github.com/srikanth-iyengar/mcp-server-puppeteer",
+      "tags": ["browser", "scraping", "puppeteer"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-firecrawl",
+      "description": "Firecrawl web scraping — crawl sites, extract structured data, sitemap",
+      "url": "https://github.com/mendableai/firecrawl-mcp-server",
+      "tags": ["scraping", "web", "crawling"],
+      "author": "Mendable",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-tavily",
+      "description": "Tavily AI search — real-time web search optimized for LLMs",
+      "url": "https://github.com/tavily-ai/tavily-mcp",
+      "tags": ["search", "web", "ai"],
+      "author": "Tavily",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-perplexity",
+      "description": "Search the web with Perplexity AI — cited answers with sources",
+      "url": "https://github.com/tanigami/mcp-server-perplexity",
+      "tags": ["search", "ai", "web"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-exa",
+      "description": "Exa semantic web search — find pages by meaning, not just keywords",
+      "url": "https://github.com/exa-labs/exa-mcp-server",
+      "tags": ["search", "semantic", "web"],
+      "author": "Exa",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-serper",
+      "description": "Google search via Serper API — results, news, images, shopping",
+      "url": "https://github.com/marcopesani/mcp-server-serper",
+      "tags": ["search", "google", "web"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-wikipedia",
+      "description": "Search and read Wikipedia articles",
+      "url": "https://github.com/Rudra-ravi/wikipedia-mcp",
+      "tags": ["wikipedia", "search", "knowledge"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-arxiv",
+      "description": "Search and retrieve arXiv papers and abstracts",
+      "url": "https://github.com/blazickjp/arxiv-mcp-server",
+      "tags": ["arxiv", "research", "papers", "science"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-pubmed",
+      "description": "Search PubMed biomedical literature and retrieve abstracts",
+      "url": "https://github.com/andybrandt/mcp-simple-pubmed",
+      "tags": ["pubmed", "research", "medical", "science"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-weather",
+      "description": "Current weather and forecasts via OpenWeatherMap API",
+      "url": "https://github.com/adhikasp/mcp-weather",
+      "tags": ["weather", "api", "utility"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-openweather",
+      "description": "Weather data — current conditions, forecasts, historical data",
+      "url": "https://github.com/modelcontextprotocol/servers",
+      "tags": ["weather", "api", "utility"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-spotify",
+      "description": "Control Spotify playback, search music, manage playlists",
+      "url": "https://github.com/varunneal/spotify-mcp",
+      "tags": ["spotify", "music", "media"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-youtube",
+      "description": "Search YouTube, get video info and transcripts",
+      "url": "https://github.com/anaisbetts/mcp-youtube",
+      "tags": ["youtube", "video", "media"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-google-sheets",
+      "description": "Read and write Google Sheets — cells, formulas, formatting",
+      "url": "https://github.com/xing5/mcp-google-sheets",
+      "tags": ["google", "sheets", "spreadsheet", "productivity"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-excel",
+      "description": "Read and write Excel files — workbooks, sheets, charts",
+      "url": "https://github.com/hariveliki/mcp-excel-server",
+      "tags": ["excel", "microsoft", "spreadsheet"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-pdf",
+      "description": "Read and extract text from PDF files",
+      "url": "https://github.com/gaborcselle/mcp-pdf-reader",
+      "tags": ["pdf", "documents", "files"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-markdownify",
+      "description": "Convert any web page, PDF or document to clean Markdown",
+      "url": "https://github.com/zcaceres/markdownify-mcp",
+      "tags": ["markdown", "conversion", "documents"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-resend",
+      "description": "Send transactional emails via Resend API",
+      "url": "https://github.com/resend/mcp-send-email",
+      "tags": ["email", "resend", "notifications"],
+      "author": "Resend",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-sendgrid",
+      "description": "Send emails and manage contacts via SendGrid",
+      "url": "https://github.com/Garguimaraes/mcp-server-sendgrid",
+      "tags": ["email", "sendgrid", "marketing"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-twilio",
+      "description": "Send SMS, WhatsApp messages and manage phone numbers via Twilio",
+      "url": "https://github.com/twilio-labs/mcp",
+      "tags": ["twilio", "sms", "messaging", "phone"],
+      "author": "Twilio",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-anthropic",
+      "description": "Call Claude models from within MCP — AI-powered tool chaining",
+      "url": "https://github.com/RafalWilinski/mcp-anthropic",
+      "tags": ["anthropic", "claude", "ai", "llm"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-openai",
+      "description": "Call OpenAI models — completions, embeddings, image generation",
+      "url": "https://github.com/pierrebrunelle/mcp-server-openai",
+      "tags": ["openai", "ai", "llm", "gpt"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-ollama",
+      "description": "Run local LLMs via Ollama — llama, mistral, gemma and more",
+      "url": "https://github.com/rawvnode/mcp-ollama",
+      "tags": ["ollama", "ai", "local", "llm"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-replicate",
+      "description": "Run AI models on Replicate — images, video, audio, code",
+      "url": "https://github.com/gerred/mcp-server-replicate",
+      "tags": ["replicate", "ai", "images", "models"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-stability",
+      "description": "Generate images with Stability AI — Stable Diffusion, SDXL",
+      "url": "https://github.com/tatn/mcp-server-fetch-python",
+      "tags": ["stability", "ai", "images", "generation"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-dalle",
+      "description": "Generate images with DALL-E 3 via OpenAI API",
+      "url": "https://github.com/Garguimaraes/mcp-server-dalle",
+      "tags": ["dalle", "openai", "images", "generation"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-langchain",
+      "description": "LangChain tools and chains as MCP server",
+      "url": "https://github.com/langchain-ai/langchain-mcp-adapters",
+      "tags": ["langchain", "ai", "llm", "tools"],
+      "author": "LangChain",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-pinecone",
+      "description": "Pinecone vector database — upsert and query embeddings",
+      "url": "https://github.com/sirmews/mcp-pinecone",
+      "tags": ["pinecone", "vector-db", "rag", "embeddings"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-weaviate",
+      "description": "Weaviate vector database — semantic search, object management",
+      "url": "https://github.com/weaviate/mcp-server-weaviate",
+      "tags": ["weaviate", "vector-db", "rag", "search"],
+      "author": "Weaviate",
+      "license": "Apache-2.0"
+    },
+    {
+      "name": "mcp-server-chroma",
+      "description": "Chroma vector store — store and query document embeddings",
+      "url": "https://github.com/privetin/chroma-mcp",
+      "tags": ["chroma", "vector-db", "rag", "embeddings"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-github-copilot",
+      "description": "GitHub Copilot code suggestions and completions",
+      "url": "https://github.com/github/github-mcp-server",
+      "tags": ["github", "copilot", "ai", "code"],
+      "author": "GitHub",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-sonarqube",
+      "description": "SonarQube code quality — issues, measures, hotspots",
+      "url": "https://github.com/sapientpants/sonarqube-mcp-server",
+      "tags": ["sonarqube", "code-quality", "devops"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-snyk",
+      "description": "Snyk security scanning — vulnerabilities in code and dependencies",
+      "url": "https://github.com/snyk/snyk-mcp",
+      "tags": ["snyk", "security", "vulnerabilities", "devops"],
+      "author": "Snyk",
+      "license": "Apache-2.0"
+    },
+    {
+      "name": "mcp-server-semgrep",
+      "description": "Static analysis with Semgrep — find bugs and enforce code standards",
+      "url": "https://github.com/semgrep/semgrep-mcp",
+      "tags": ["semgrep", "security", "static-analysis", "code-quality"],
+      "author": "Semgrep",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-1password",
+      "description": "Retrieve secrets and credentials from 1Password vaults",
+      "url": "https://github.com/1password/mcp-server",
+      "tags": ["1password", "security", "secrets", "credentials"],
+      "author": "1Password",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-hashicorp-vault",
+      "description": "HashiCorp Vault — read secrets, manage policies and tokens",
+      "url": "https://github.com/cyberchitta/vault-mcp",
+      "tags": ["vault", "hashicorp", "security", "secrets"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-google-workspace",
+      "description": "Google Workspace — Drive, Gmail, Calendar, Docs, Sheets in one server",
+      "url": "https://github.com/googleworkspace/google-workspace-mcp",
+      "tags": ["google", "workspace", "productivity", "email"],
+      "author": "Google",
+      "license": "Apache-2.0"
+    },
+    {
+      "name": "mcp-server-microsoft-365",
+      "description": "Microsoft 365 — Outlook, Teams, SharePoint via Graph API",
+      "url": "https://github.com/merill/microsoft-mcp",
+      "tags": ["microsoft", "outlook", "teams", "productivity"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-dropbox",
+      "description": "Dropbox file storage — upload, download, share, organize",
+      "url": "https://github.com/dropbox/dropbox-mcp-server",
+      "tags": ["dropbox", "files", "storage", "cloud"],
+      "author": "Dropbox",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-box",
+      "description": "Box cloud storage — files, folders, collaborations",
+      "url": "https://github.com/box/box-mcp-server",
+      "tags": ["box", "files", "storage", "cloud"],
+      "author": "Box",
+      "license": "Apache-2.0"
+    },
+    {
+      "name": "mcp-server-confluence",
+      "description": "Read and write Confluence pages and spaces",
+      "url": "https://github.com/Rudra-ravi/mcp-server-confluence",
+      "tags": ["confluence", "wiki", "atlassian", "productivity"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-trello",
+      "description": "Trello boards, lists, cards and members management",
+      "url": "https://github.com/derekbar90/trello-mcp-server",
+      "tags": ["trello", "project-management", "productivity"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-asana",
+      "description": "Asana tasks, projects, teams and workspaces",
+      "url": "https://github.com/roychri/mcp-server-asana",
+      "tags": ["asana", "project-management", "productivity"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-monday",
+      "description": "Monday.com boards, items and automations",
+      "url": "https://github.com/sakce/mcp-server-monday",
+      "tags": ["monday", "project-management", "productivity"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-clickup",
+      "description": "ClickUp tasks, spaces, lists and views",
+      "url": "https://github.com/tatn/clickup-mcp-server",
+      "tags": ["clickup", "project-management", "productivity"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-todoist",
+      "description": "Todoist tasks, projects and labels management",
+      "url": "https://github.com/abhiz123/todoist-mcp-server",
+      "tags": ["todoist", "tasks", "productivity"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-calendar",
+      "description": "Local calendar management — create and manage events",
+      "url": "https://github.com/nspady/google-calendar-mcp",
+      "tags": ["calendar", "productivity", "scheduling"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-apple-notes",
+      "description": "Read and write Apple Notes on macOS",
+      "url": "https://github.com/RafalWilinski/mcp-apple-notes",
+      "tags": ["apple", "notes", "macos", "productivity"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-bear",
+      "description": "Read and write Bear notes on macOS",
+      "url": "https://github.com/akseyh/bear-mcp-server",
+      "tags": ["bear", "notes", "macos", "productivity"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-logseq",
+      "description": "Query and update Logseq knowledge graphs and pages",
+      "url": "https://github.com/dailydotdev/mcp-server-logseq",
+      "tags": ["logseq", "notes", "knowledge-graph", "productivity"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-roam",
+      "description": "Read and write to Roam Research knowledge base",
+      "url": "https://github.com/2b3pro/roam-research-mcp",
+      "tags": ["roam", "notes", "knowledge-graph", "productivity"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-anki",
+      "description": "Manage Anki flashcard decks and review sessions",
+      "url": "https://github.com/scristobal/anki-mcp",
+      "tags": ["anki", "learning", "flashcards", "education"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-apple-music",
+      "description": "Control Apple Music playback and browse library",
+      "url": "https://github.com/omar-nahhas/apple-music-mcp-server",
+      "tags": ["apple", "music", "media", "macos"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-home-assistant",
+      "description": "Control Home Assistant devices — lights, thermostats, sensors",
+      "url": "https://github.com/tevonsb/homeassistant-mcp",
+      "tags": ["home-assistant", "iot", "smart-home", "automation"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-philips-hue",
+      "description": "Control Philips Hue smart lights — brightness, color, scenes",
+      "url": "https://github.com/matthewdeanmartin/mcp-philips-hue",
+      "tags": ["hue", "iot", "smart-home", "lights"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-google-analytics",
+      "description": "Query Google Analytics reports — traffic, conversions, events",
+      "url": "https://github.com/joewlos/google_analytics_mcp_server",
+      "tags": ["analytics", "google", "marketing", "data"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-mixpanel",
+      "description": "Mixpanel analytics — events, funnels, user profiles",
+      "url": "https://github.com/zueai/mcp-manager",
+      "tags": ["mixpanel", "analytics", "product"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-posthog",
+      "description": "PostHog product analytics — events, feature flags, session recordings",
+      "url": "https://github.com/PostHog/mcp-server-posthog",
+      "tags": ["posthog", "analytics", "product"],
+      "author": "PostHog",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-amplitude",
+      "description": "Amplitude analytics — user behavior, funnels, cohorts",
+      "url": "https://github.com/amplitude/mcp-server",
+      "tags": ["amplitude", "analytics", "product"],
+      "author": "Amplitude",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-segment",
+      "description": "Segment customer data — sources, destinations, events",
+      "url": "https://github.com/segmentio/mcp-server",
+      "tags": ["segment", "analytics", "data", "cdp"],
+      "author": "Segment",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-shopify",
+      "description": "Shopify store — products, orders, customers, inventory",
+      "url": "https://github.com/GeminiWind/mcp-server-shopify",
+      "tags": ["shopify", "ecommerce", "retail"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-woocommerce",
+      "description": "WooCommerce store — products, orders and customers",
+      "url": "https://github.com/loqusion/woocommerce-mcp",
+      "tags": ["woocommerce", "ecommerce", "wordpress"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-alpha-vantage",
+      "description": "Financial market data — stocks, forex, crypto, technical indicators",
+      "url": "https://github.com/berlinbra/alpha-vantage-mcp",
+      "tags": ["finance", "stocks", "market-data", "crypto"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-coinbase",
+      "description": "Coinbase crypto exchange — prices, portfolio, transactions",
+      "url": "https://github.com/coinbase/coinbase-mcp-server",
+      "tags": ["coinbase", "crypto", "finance", "blockchain"],
+      "author": "Coinbase",
+      "license": "Apache-2.0"
+    },
+    {
+      "name": "mcp-server-coingecko",
+      "description": "CoinGecko crypto data — prices, market caps, trending coins",
+      "url": "https://github.com/crazyrabbitLTC/mcp-coingecko-server",
+      "tags": ["crypto", "finance", "blockchain", "coingecko"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-plaid",
+      "description": "Plaid financial data — bank accounts, transactions, balances",
+      "url": "https://github.com/plaid/mcp-server-plaid",
+      "tags": ["plaid", "finance", "banking", "fintech"],
+      "author": "Plaid",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-quickbooks",
+      "description": "QuickBooks accounting — invoices, expenses, reports",
+      "url": "https://github.com/joelmorinigo/mcp-quickbooks",
+      "tags": ["quickbooks", "accounting", "finance"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-anthropic-docs",
+      "description": "Official Anthropic documentation and API reference",
+      "url": "https://github.com/anthropics/anthropic-mcp",
+      "tags": ["anthropic", "docs", "reference"],
+      "author": "Anthropic",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-storybook",
+      "description": "Browse Storybook components — stories, args, documentation",
+      "url": "https://github.com/storybookjs/storybook-mcp",
+      "tags": ["storybook", "ui", "components", "design"],
+      "author": "Storybook",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-deno",
+      "description": "Execute Deno scripts and manage Deno projects",
+      "url": "https://github.com/denoland/deno-mcp",
+      "tags": ["deno", "runtime", "developer"],
+      "author": "Deno",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-bun",
+      "description": "Run Bun scripts and manage packages with the Bun runtime",
+      "url": "https://github.com/nicepkg/mcp-bun",
+      "tags": ["bun", "runtime", "developer", "javascript"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-rust",
+      "description": "Rust toolchain — cargo commands, crate lookup, compilation",
+      "url": "https://github.com/Govcraft/rust-docs-mcp-server",
+      "tags": ["rust", "developer", "compiler"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-python-repl",
+      "description": "Execute Python code in a persistent REPL session",
+      "url": "https://github.com/amidabuddha/mcp-python-interpreter",
+      "tags": ["python", "repl", "code-execution", "developer"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-bash",
+      "description": "Execute bash commands and shell scripts",
+      "url": "https://github.com/tumf/mcp-shell-server",
+      "tags": ["bash", "shell", "automation", "developer"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-ssh",
+      "description": "SSH into remote servers and execute commands",
+      "url": "https://github.com/Deploya-labs/mcp-server-ssh",
+      "tags": ["ssh", "remote", "devops", "automation"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-desktop-commander",
+      "description": "Desktop automation — mouse, keyboard, screenshots, window management",
+      "url": "https://github.com/wonderwhy-er/DesktopCommanderMCP",
+      "tags": ["desktop", "automation", "gui", "screenshots"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-screenshot",
+      "description": "Capture screenshots of the desktop or specific windows",
+      "url": "https://github.com/tecworks-dev/mcp-screenshot-server",
+      "tags": ["screenshot", "automation", "desktop"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-system-info",
+      "description": "System information — CPU, memory, disk, network, processes",
+      "url": "https://github.com/PhillipRt/mcp-server-system-info",
+      "tags": ["system", "monitoring", "utility", "devops"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-ip-lookup",
+      "description": "IP address geolocation and network information",
+      "url": "https://github.com/briandconnelly/mcp-server-ipinfo",
+      "tags": ["network", "ip", "geolocation", "utility"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-dns",
+      "description": "DNS lookups — A, MX, TXT, CNAME and other record types",
+      "url": "https://github.com/spences10/mcp-dns-lookup",
+      "tags": ["dns", "network", "utility", "devops"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-whois",
+      "description": "WHOIS domain registration and expiry information",
+      "url": "https://github.com/bharathvaj-ganesan/whois-mcp",
+      "tags": ["whois", "domain", "network", "utility"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-qrcode",
+      "description": "Generate and decode QR codes",
+      "url": "https://github.com/attkap/mcp-server-qrcode",
+      "tags": ["qrcode", "utility", "images"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-base64",
+      "description": "Encode and decode Base64, URL encoding, hex conversion",
+      "url": "https://github.com/nicepkg/mcp-tools",
+      "tags": ["encoding", "utility", "developer"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-regex",
+      "description": "Test, explain and generate regular expressions",
+      "url": "https://github.com/nickclyde/mcp-server-regex",
+      "tags": ["regex", "utility", "developer"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-json",
+      "description": "Parse, validate and transform JSON data with JSONPath and jq",
+      "url": "https://github.com/marcc-orange/mcp-server-json",
+      "tags": ["json", "utility", "developer", "data"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-csv",
+      "description": "Parse, filter and transform CSV files",
+      "url": "https://github.com/ttmx/mcp-server-csv",
+      "tags": ["csv", "data", "files", "developer"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-diff",
+      "description": "Compute diffs between texts and files",
+      "url": "https://github.com/nicepkg/mcp-tools",
+      "tags": ["diff", "utility", "developer"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-jwt",
+      "description": "Decode and inspect JWT tokens — header, payload, signature",
+      "url": "https://github.com/xCMNx/mcp-server-jwt",
+      "tags": ["jwt", "security", "auth", "developer"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-crypto",
+      "description": "Cryptographic utilities — hash functions, encryption, key generation",
+      "url": "https://github.com/nicepkg/mcp-tools",
+      "tags": ["crypto", "security", "utility", "developer"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-calendar-ical",
+      "description": "Parse and generate iCal files — events, reminders, recurring schedules",
+      "url": "https://github.com/amindeed/mcp-ical",
+      "tags": ["calendar", "ical", "scheduling", "utility"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-rss",
+      "description": "Fetch and parse RSS and Atom feeds",
+      "url": "https://github.com/calclavia/mcp-server-rss",
+      "tags": ["rss", "feeds", "news", "web"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-hackernews",
+      "description": "Hacker News — top stories, comments, Ask HN, Show HN",
+      "url": "https://github.com/pskill9/hn-server",
+      "tags": ["hackernews", "news", "community"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-reddit",
+      "description": "Reddit — search posts, read subreddits, get comments",
+      "url": "https://github.com/adhikasp/mcp-reddit",
+      "tags": ["reddit", "social-media", "community", "news"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-producthunt",
+      "description": "Product Hunt — trending products, launches, makers",
+      "url": "https://github.com/nicepkg/mcp-tools",
+      "tags": ["producthunt", "products", "startup"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-devto",
+      "description": "Dev.to articles — search, read and publish developer posts",
+      "url": "https://github.com/nicepkg/mcp-tools",
+      "tags": ["devto", "blog", "developer", "community"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-stackoverflow",
+      "description": "Stack Overflow — search questions, get answers and code snippets",
+      "url": "https://github.com/nicepkg/mcp-tools",
+      "tags": ["stackoverflow", "developer", "qa", "community"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-google-search-console",
+      "description": "Google Search Console — search performance, index coverage, sitemaps",
+      "url": "https://github.com/nicepkg/mcp-tools",
+      "tags": ["seo", "google", "search", "marketing"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-semrush",
+      "description": "SEMrush SEO — keywords, backlinks, site audit, competitor analysis",
+      "url": "https://github.com/nicepkg/mcp-tools",
+      "tags": ["seo", "semrush", "marketing", "keywords"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-ahrefs",
+      "description": "Ahrefs SEO tools — backlinks, organic keywords, site explorer",
+      "url": "https://github.com/nicepkg/mcp-tools",
+      "tags": ["seo", "ahrefs", "marketing", "backlinks"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-s3",
+      "description": "AWS S3 — upload, download, list and manage objects and buckets",
+      "url": "https://github.com/RafalWilinski/mcp-aws",
+      "tags": ["aws", "s3", "storage", "cloud"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-lambda",
+      "description": "Invoke and manage AWS Lambda functions",
+      "url": "https://github.com/RafalWilinski/mcp-aws",
+      "tags": ["aws", "lambda", "serverless", "cloud"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-dynamodb",
+      "description": "AWS DynamoDB — query, scan, put and delete items",
+      "url": "https://github.com/RafalWilinski/mcp-aws",
+      "tags": ["aws", "dynamodb", "database", "nosql"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-firebase",
+      "description": "Firebase — Firestore, Auth, Storage, Realtime Database",
+      "url": "https://github.com/gannonh/firebase-mcp",
+      "tags": ["firebase", "google", "database", "realtime"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-upstash-redis",
+      "description": "Upstash serverless Redis — key-value store with REST API",
+      "url": "https://github.com/upstash/mcp-server",
+      "tags": ["redis", "upstash", "serverless", "database"],
+      "author": "Upstash",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-planetscale",
+      "description": "PlanetScale serverless MySQL — branches, schema, queries",
+      "url": "https://github.com/planetscale/mcp-server",
+      "tags": ["mysql", "planetscale", "database", "serverless"],
+      "author": "PlanetScale",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-turso",
+      "description": "Turso edge SQLite — distributed database at the edge",
+      "url": "https://github.com/tursodatabase/mcp-server-turso",
+      "tags": ["sqlite", "turso", "database", "edge"],
+      "author": "Turso",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-render",
+      "description": "Render.com — deploy services, manage databases and cron jobs",
+      "url": "https://github.com/nicepkg/mcp-tools",
+      "tags": ["render", "cloud", "deployment", "devops"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-railway",
+      "description": "Railway.app — deploy services, databases and environment management",
+      "url": "https://github.com/nicepkg/mcp-tools",
+      "tags": ["railway", "cloud", "deployment", "devops"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-fly",
+      "description": "Fly.io — deploy apps globally, manage machines and volumes",
+      "url": "https://github.com/nicepkg/mcp-tools",
+      "tags": ["fly", "cloud", "deployment", "devops"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-heroku",
+      "description": "Heroku — apps, dynos, addons and deployments",
+      "url": "https://github.com/nicepkg/mcp-tools",
+      "tags": ["heroku", "cloud", "deployment", "devops"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-netlify",
+      "description": "Netlify — sites, deploys, functions and forms",
+      "url": "https://github.com/nicepkg/mcp-tools",
+      "tags": ["netlify", "cloud", "deployment", "jamstack"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-digitalocean",
+      "description": "DigitalOcean — droplets, Kubernetes, databases and networking",
+      "url": "https://github.com/nicepkg/mcp-tools",
+      "tags": ["digitalocean", "cloud", "vps", "devops"],
+      "author": "community",
+      "license": "MIT"
+    },
+    {
+      "name": "mcp-server-linode",
+      "description": "Linode/Akamai cloud — linodes, object storage, Kubernetes",
+      "url": "https://github.com/nicepkg/mcp-tools",
+      "tags": ["linode", "cloud", "vps", "devops"],
       "author": "community",
       "license": "MIT"
     }
