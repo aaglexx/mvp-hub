@@ -11,6 +11,9 @@ npm install -g @aaglexx/mcp-man
 mcp-man ui
 ```
 
+![Inspect tab showing tool schema](docs/screenshot-inspect.png)
+![Test tab showing live result](docs/screenshot-test.png)
+
 ---
 
 ## The problem
@@ -41,8 +44,8 @@ npx -y @modelcontextprotocol/server-memory
 npx -y @modelcontextprotocol/server-filesystem /your/path
 
 # Needs a token — wizard will guide you
-github-mcp-server         → GITHUB_PERSONAL_ACCESS_TOKEN
-@notionhq/notion-mcp-server → Notion integration token
+github-mcp-server              → GITHUB_PERSONAL_ACCESS_TOKEN
+@notionhq/notion-mcp-server    → Notion integration token
 ```
 
 Just paste any command into the Inspect field and hit go.
