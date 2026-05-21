@@ -12,13 +12,15 @@
     "registry"
   ],
   "scripts": {
-    "build": "tsc && vite build --config vite.config.ts",
-    "build:cli": "tsc",
+    "build:cli": "tsc && npm run postbuild:cli",
+    "build": "npm run build:cli && vite build --config vite.config.ts",
     "build:web": "vite build --config vite.config.ts",
     "dev:cli": "tsx src/cli.ts",
     "dev:web": "vite --config vite.config.ts",
     "dev": "concurrently \"npm run dev:web\" \"tsx src/cli.ts ui --dev\"",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "postbuild:cli": "node -e \"const fs=require('fs');const f='dist/cli.js';const c=fs.readFileSync(f,'utf8');if(!c.startsWith('#!/usr/bin/env node')){fs.writeFileSync(f,'#!/usr/bin/env node\\n'+c);}\""
+    
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.0",
