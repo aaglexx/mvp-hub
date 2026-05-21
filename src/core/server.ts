@@ -4,7 +4,7 @@ import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
 
 const PORT = 7070;
-const CONNECT_TIMEOUT_MS = 15000;
+const CONNECT_TIMEOUT_MS = 60000;
 const CALL_TIMEOUT_MS = 30000;
 
 function parseCommand(command: string): { cmd: string; args: string[] } {
