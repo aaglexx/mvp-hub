@@ -15,8 +15,8 @@
       "env": []
     },
     {
-      "name": "@modelcontextprotocol/server-github",
-      "description": "GitHub API — repos, issues, PRs, code search, workflows",
+      "name": "github-mcp-server",
+      "description": "Official GitHub MCP server — 26+ tools for repos, issues, PRs, code search",
       "url": "https://github.com/modelcontextprotocol/servers/tree/main/src/github",
       "tags": [
         "git",
@@ -24,7 +24,7 @@
         "official",
         "devops"
       ],
-      "author": "Anthropic",
+      "author": "GitHub",
       "license": "MIT",
       "env": [
         {
@@ -825,20 +825,6 @@
       ]
     },
     {
-      "name": "mcp-server-gcp",
-      "description": "Google Cloud Platform tools — GCS, BigQuery, Cloud Run, Compute Engine",
-      "url": "https://github.com/rusiaaman/wcgw",
-      "tags": [
-        "gcp",
-        "google",
-        "cloud",
-        "devops"
-      ],
-      "author": "community",
-      "license": "MIT",
-      "env": []
-    },
-    {
       "name": "mcp-azure-devops",
       "description": "Azure DevOps — work items, repos, pipelines and test plans",
       "url": "https://github.com/Tiberriver256/mcp-server-azure-devops",
@@ -1301,19 +1287,6 @@
       ]
     },
     {
-      "name": "mcp-server-linkedin",
-      "description": "Read LinkedIn profile and company data",
-      "url": "https://github.com/adhikasp/mcp-linkedin",
-      "tags": [
-        "linkedin",
-        "social-media",
-        "professional"
-      ],
-      "author": "community",
-      "license": "MIT",
-      "env": []
-    },
-    {
       "name": "mcp-server-github-actions",
       "description": "Trigger and monitor GitHub Actions workflows",
       "url": "https://github.com/ko1ynnky/github-actions-mcp-server",
@@ -1585,19 +1558,6 @@
       "env": []
     },
     {
-      "name": "mcp-server-openweather",
-      "description": "Weather data — current conditions, forecasts, historical data",
-      "url": "https://github.com/modelcontextprotocol/servers",
-      "tags": [
-        "weather",
-        "api",
-        "utility"
-      ],
-      "author": "community",
-      "license": "MIT",
-      "env": []
-    },
-    {
       "name": "mcp-server-spotify",
       "description": "Control Spotify playback, search music, manage playlists",
       "url": "https://github.com/varunneal/spotify-mcp",
@@ -1832,34 +1792,6 @@
       ]
     },
     {
-      "name": "mcp-server-stability",
-      "description": "Generate images with Stability AI — Stable Diffusion, SDXL",
-      "url": "https://github.com/tatn/mcp-server-fetch-python",
-      "tags": [
-        "stability",
-        "ai",
-        "images",
-        "generation"
-      ],
-      "author": "community",
-      "license": "MIT",
-      "env": []
-    },
-    {
-      "name": "mcp-server-dalle",
-      "description": "Generate images with DALL-E 3 via OpenAI API",
-      "url": "https://github.com/Garguimaraes/mcp-server-dalle",
-      "tags": [
-        "dalle",
-        "openai",
-        "images",
-        "generation"
-      ],
-      "author": "community",
-      "license": "MIT",
-      "env": []
-    },
-    {
       "name": "mcp-server-langchain",
       "description": "LangChain tools and chains as MCP server",
       "url": "https://github.com/langchain-ai/langchain-mcp-adapters",
@@ -1936,20 +1868,6 @@
         "embeddings"
       ],
       "author": "community",
-      "license": "MIT",
-      "env": []
-    },
-    {
-      "name": "mcp-server-github-copilot",
-      "description": "GitHub Copilot code suggestions and completions",
-      "url": "https://github.com/github/github-mcp-server",
-      "tags": [
-        "github",
-        "copilot",
-        "ai",
-        "code"
-      ],
-      "author": "GitHub",
       "license": "MIT",
       "env": []
     },
@@ -2374,19 +2292,6 @@
       ]
     },
     {
-      "name": "mcp-server-mixpanel",
-      "description": "Mixpanel analytics — events, funnels, user profiles",
-      "url": "https://github.com/zueai/mcp-manager",
-      "tags": [
-        "mixpanel",
-        "analytics",
-        "product"
-      ],
-      "author": "community",
-      "license": "MIT",
-      "env": []
-    },
-    {
       "name": "mcp-server-posthog",
       "description": "PostHog product analytics — events, feature flags, session recordings",
       "url": "https://github.com/PostHog/mcp-server-posthog",
@@ -2469,19 +2374,6 @@
           "url": "https://shopify.dev/docs/apps/auth/admin-app-access-tokens"
         }
       ]
-    },
-    {
-      "name": "mcp-server-woocommerce",
-      "description": "WooCommerce store — products, orders and customers",
-      "url": "https://github.com/loqusion/woocommerce-mcp",
-      "tags": [
-        "woocommerce",
-        "ecommerce",
-        "wordpress"
-      ],
-      "author": "community",
-      "license": "MIT",
-      "env": []
     },
     {
       "name": "mcp-server-alpha-vantage",
@@ -2581,19 +2473,6 @@
           "required": true
         }
       ]
-    },
-    {
-      "name": "mcp-server-quickbooks",
-      "description": "QuickBooks accounting — invoices, expenses, reports",
-      "url": "https://github.com/joelmorinigo/mcp-quickbooks",
-      "tags": [
-        "quickbooks",
-        "accounting",
-        "finance"
-      ],
-      "author": "community",
-      "license": "MIT",
-      "env": []
     },
     {
       "name": "mcp-server-anthropic-docs",
@@ -2801,32 +2680,6 @@
       "env": []
     },
     {
-      "name": "mcp-server-base64",
-      "description": "Encode and decode Base64, URL encoding, hex conversion",
-      "url": "https://github.com/nicepkg/mcp-tools",
-      "tags": [
-        "encoding",
-        "utility",
-        "developer"
-      ],
-      "author": "community",
-      "license": "MIT",
-      "env": []
-    },
-    {
-      "name": "mcp-server-regex",
-      "description": "Test, explain and generate regular expressions",
-      "url": "https://github.com/nickclyde/mcp-server-regex",
-      "tags": [
-        "regex",
-        "utility",
-        "developer"
-      ],
-      "author": "community",
-      "license": "MIT",
-      "env": []
-    },
-    {
       "name": "mcp-server-json",
       "description": "Parse, validate and transform JSON data with JSONPath and jq",
       "url": "https://github.com/marcc-orange/mcp-server-json",
@@ -2848,47 +2701,6 @@
         "csv",
         "data",
         "files",
-        "developer"
-      ],
-      "author": "community",
-      "license": "MIT",
-      "env": []
-    },
-    {
-      "name": "mcp-server-diff",
-      "description": "Compute diffs between texts and files",
-      "url": "https://github.com/nicepkg/mcp-tools",
-      "tags": [
-        "diff",
-        "utility",
-        "developer"
-      ],
-      "author": "community",
-      "license": "MIT",
-      "env": []
-    },
-    {
-      "name": "mcp-server-jwt",
-      "description": "Decode and inspect JWT tokens — header, payload, signature",
-      "url": "https://github.com/xCMNx/mcp-server-jwt",
-      "tags": [
-        "jwt",
-        "security",
-        "auth",
-        "developer"
-      ],
-      "author": "community",
-      "license": "MIT",
-      "env": []
-    },
-    {
-      "name": "mcp-server-crypto",
-      "description": "Cryptographic utilities — hash functions, encryption, key generation",
-      "url": "https://github.com/nicepkg/mcp-tools",
-      "tags": [
-        "crypto",
-        "security",
-        "utility",
         "developer"
       ],
       "author": "community",
@@ -2931,103 +2743,6 @@
         "hackernews",
         "news",
         "community"
-      ],
-      "author": "community",
-      "license": "MIT",
-      "env": []
-    },
-    {
-      "name": "mcp-server-reddit",
-      "description": "Reddit — search posts, read subreddits, get comments",
-      "url": "https://github.com/adhikasp/mcp-reddit",
-      "tags": [
-        "reddit",
-        "social-media",
-        "community",
-        "news"
-      ],
-      "author": "community",
-      "license": "MIT",
-      "env": []
-    },
-    {
-      "name": "mcp-server-producthunt",
-      "description": "Product Hunt — trending products, launches, makers",
-      "url": "https://github.com/nicepkg/mcp-tools",
-      "tags": [
-        "producthunt",
-        "products",
-        "startup"
-      ],
-      "author": "community",
-      "license": "MIT",
-      "env": []
-    },
-    {
-      "name": "mcp-server-devto",
-      "description": "Dev.to articles — search, read and publish developer posts",
-      "url": "https://github.com/nicepkg/mcp-tools",
-      "tags": [
-        "devto",
-        "blog",
-        "developer",
-        "community"
-      ],
-      "author": "community",
-      "license": "MIT",
-      "env": []
-    },
-    {
-      "name": "mcp-server-stackoverflow",
-      "description": "Stack Overflow — search questions, get answers and code snippets",
-      "url": "https://github.com/nicepkg/mcp-tools",
-      "tags": [
-        "stackoverflow",
-        "developer",
-        "qa",
-        "community"
-      ],
-      "author": "community",
-      "license": "MIT",
-      "env": []
-    },
-    {
-      "name": "mcp-server-google-search-console",
-      "description": "Google Search Console — search performance, index coverage, sitemaps",
-      "url": "https://github.com/nicepkg/mcp-tools",
-      "tags": [
-        "seo",
-        "google",
-        "search",
-        "marketing"
-      ],
-      "author": "community",
-      "license": "MIT",
-      "env": []
-    },
-    {
-      "name": "mcp-server-semrush",
-      "description": "SEMrush SEO — keywords, backlinks, site audit, competitor analysis",
-      "url": "https://github.com/nicepkg/mcp-tools",
-      "tags": [
-        "seo",
-        "semrush",
-        "marketing",
-        "keywords"
-      ],
-      "author": "community",
-      "license": "MIT",
-      "env": []
-    },
-    {
-      "name": "mcp-server-ahrefs",
-      "description": "Ahrefs SEO tools — backlinks, organic keywords, site explorer",
-      "url": "https://github.com/nicepkg/mcp-tools",
-      "tags": [
-        "seo",
-        "ahrefs",
-        "marketing",
-        "backlinks"
       ],
       "author": "community",
       "license": "MIT",
@@ -3226,104 +2941,6 @@
           "required": true
         }
       ]
-    },
-    {
-      "name": "mcp-server-render",
-      "description": "Render.com — deploy services, manage databases and cron jobs",
-      "url": "https://github.com/nicepkg/mcp-tools",
-      "tags": [
-        "render",
-        "cloud",
-        "deployment",
-        "devops"
-      ],
-      "author": "community",
-      "license": "MIT",
-      "env": []
-    },
-    {
-      "name": "mcp-server-railway",
-      "description": "Railway.app — deploy services, databases and environment management",
-      "url": "https://github.com/nicepkg/mcp-tools",
-      "tags": [
-        "railway",
-        "cloud",
-        "deployment",
-        "devops"
-      ],
-      "author": "community",
-      "license": "MIT",
-      "env": []
-    },
-    {
-      "name": "mcp-server-fly",
-      "description": "Fly.io — deploy apps globally, manage machines and volumes",
-      "url": "https://github.com/nicepkg/mcp-tools",
-      "tags": [
-        "fly",
-        "cloud",
-        "deployment",
-        "devops"
-      ],
-      "author": "community",
-      "license": "MIT",
-      "env": []
-    },
-    {
-      "name": "mcp-server-heroku",
-      "description": "Heroku — apps, dynos, addons and deployments",
-      "url": "https://github.com/nicepkg/mcp-tools",
-      "tags": [
-        "heroku",
-        "cloud",
-        "deployment",
-        "devops"
-      ],
-      "author": "community",
-      "license": "MIT",
-      "env": []
-    },
-    {
-      "name": "mcp-server-netlify",
-      "description": "Netlify — sites, deploys, functions and forms",
-      "url": "https://github.com/nicepkg/mcp-tools",
-      "tags": [
-        "netlify",
-        "cloud",
-        "deployment",
-        "jamstack"
-      ],
-      "author": "community",
-      "license": "MIT",
-      "env": []
-    },
-    {
-      "name": "mcp-server-digitalocean",
-      "description": "DigitalOcean — droplets, Kubernetes, databases and networking",
-      "url": "https://github.com/nicepkg/mcp-tools",
-      "tags": [
-        "digitalocean",
-        "cloud",
-        "vps",
-        "devops"
-      ],
-      "author": "community",
-      "license": "MIT",
-      "env": []
-    },
-    {
-      "name": "mcp-server-linode",
-      "description": "Linode/Akamai cloud — linodes, object storage, Kubernetes",
-      "url": "https://github.com/nicepkg/mcp-tools",
-      "tags": [
-        "linode",
-        "cloud",
-        "vps",
-        "devops"
-      ],
-      "author": "community",
-      "license": "MIT",
-      "env": []
     }
   ]
 }
