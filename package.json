@@ -3,9 +3,7 @@
   "version": "0.1.19",
   "description": "Registry and inspector for MCP servers — search, inspect, test from CLI or browser",
   "type": "module",
-  "bin": {
-    "mcp-man": "./dist/cli.js"
-  },
+  "bin": "dist/cli.js",
   "files": [
     "dist",
     "web/dist",
