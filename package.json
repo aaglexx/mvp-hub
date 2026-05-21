@@ -4,13 +4,14 @@
   "description": "Registry and inspector for MCP servers — search, inspect, test from CLI or browser",
   "type": "module",
   "bin": {
-    "mcp-man": "dist/cli.js"
+    "mcp-man": "bin/mcp-man.js"
   },
   "files": [
+    "bin",
     "dist",
     "web/dist",
     "registry"
-  ],
+],
   "scripts": {
     "build:cli": "tsc && npm run postbuild:cli",
     "build": "npm run build:cli && vite build --config vite.config.ts",
