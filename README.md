@@ -1,3 +1,7 @@
+[![npm version](https://img.shields.io/npm/v/@aaglexx/mcp-man)](https://www.npmjs.com/package/@aaglexx/mcp-man)
+[![npm downloads](https://img.shields.io/npm/dm/@aaglexx/mcp-man)](https://www.npmjs.com/package/@aaglexx/mcp-man)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
+
 # mcp-man
 
 > Postman for MCP — search, inspect and test Model Context Protocol servers from your browser.
