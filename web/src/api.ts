@@ -48,13 +48,40 @@ export interface MCPResource {
 }
 
 export interface InspectResult {
+  command: string;
   tools: MCPTool[];
   resources: MCPResource[];
   prompts: { name: string; description?: string }[];
+  error?: string;
 }
 
 export interface TestResult {
   content: { type: string; text?: string }[];
+}
+
+// Collections
+export interface CollectionStep {
+  id: string;
+  command: string;
+  tool: string;
+  args: Record<string, unknown>;
+  label?: string;
+}
+
+export interface Collection {
+  id: string;
+  name: string;
+  steps: CollectionStep[];
+  createdAt: number;
+}
+
+export interface CollectionStepResult {
+  command: string;
+  tool: string;
+  args: Record<string, unknown>;
+  result: TestResult | null;
+  durationMs: number;
+  error: string | null;
 }
 
 const BASE =
@@ -86,6 +113,16 @@ export async function inspectServer(command: string): Promise<InspectResult> {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ command }),
   });
+  const data = await res.json();
+  return { ...data, command };
+}
+
+export async function inspectMultiple(commands: string[]): Promise<InspectResult[]> {
+  const res = await apiFetch(`${BASE}/inspect-multi`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ commands }),
+  });
   return res.json();
 }
 
@@ -102,41 +139,55 @@ export async function callTool(
   return res.json();
 }
 
+export async function runCollection(
+  steps: { command: string; tool: string; args: Record<string, unknown> }[]
+): Promise<{ steps: CollectionStepResult[] }> {
+  const res = await apiFetch(`${BASE}/run-collection`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ steps }),
+  });
+  return res.json();
+}
+
 // Build a stub JSON args object from a tool schema
 export function buildStub(tool: MCPTool): string {
   const props = tool.inputSchema?.properties ?? {};
   const required = tool.inputSchema?.required ?? [];
-
   const stub: Record<string, unknown> = {};
 
   for (const [k, v] of Object.entries(props)) {
     const prop = v as SchemaProperty;
-
-    // Use default if provided
-    if (prop.default !== undefined) {
-      stub[k] = prop.default;
-      continue;
-    }
-
-    // Determine type
+    if (prop.default !== undefined) { stub[k] = prop.default; continue; }
     const rawType = prop.type;
     const type = Array.isArray(rawType)
       ? (rawType.find((t) => t !== "null") ?? "string")
       : (rawType ?? "string");
-
-    // Use enum first value if available
-    if (prop.enum && prop.enum.length > 0) {
-      stub[k] = prop.enum[0];
-      continue;
-    }
-
-    // Type-appropriate defaults
+    if (prop.enum && prop.enum.length > 0) { stub[k] = prop.enum[0]; continue; }
     if (type === "number" || type === "integer") stub[k] = required.includes(k) ? 1 : 0;
     else if (type === "boolean") stub[k] = false;
     else if (type === "array") stub[k] = [];
     else if (type === "object") stub[k] = {};
-    else stub[k] = ""; // string / any / unknown
+    else stub[k] = "";
   }
 
   return JSON.stringify(stub, null, 2);
+}
+
+// LocalStorage helpers for collections
+const COLLECTIONS_KEY = "mcp-man:collections";
+
+export function loadCollections(): Collection[] {
+  try {
+    const raw = localStorage.getItem(COLLECTIONS_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch { return []; }
+}
+
+export function saveCollections(collections: Collection[]): void {
+  localStorage.setItem(COLLECTIONS_KEY, JSON.stringify(collections));
+}
+
+export function createCollection(name: string, steps: CollectionStep[] = []): Collection {
+  return { id: crypto.randomUUID(), name, steps, createdAt: Date.now() };
 }

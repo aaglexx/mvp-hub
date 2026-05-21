@@ -12,13 +12,6 @@ interface ParsedCommand {
   env: Record<string, string>;
 }
 
-/**
- * Parse a command string like:
- *   "KEY=val KEY2=val2 npx -y @scope/pkg arg1"
- * into { cmd: "npx", args: ["-y", "@scope/pkg", "arg1"], env: { KEY: "val", KEY2: "val2" } }
- *
- * Also handles quoted strings: npx -y server "path with spaces"
- */
 function parseCommand(command: string): ParsedCommand {
   const tokens: string[] = [];
   let current = "";
@@ -27,45 +20,26 @@ function parseCommand(command: string): ParsedCommand {
 
   for (const ch of command.trim()) {
     if (inQuote) {
-      if (ch === quoteChar) {
-        inQuote = false;
-      } else {
-        current += ch;
-      }
+      if (ch === quoteChar) { inQuote = false; }
+      else { current += ch; }
     } else if (ch === '"' || ch === "'") {
-      inQuote = true;
-      quoteChar = ch;
+      inQuote = true; quoteChar = ch;
     } else if (ch === " ") {
-      if (current) {
-        tokens.push(current);
-        current = "";
-      }
-    } else {
-      current += ch;
-    }
+      if (current) { tokens.push(current); current = ""; }
+    } else { current += ch; }
   }
   if (current) tokens.push(current);
 
-  // Split leading KEY=VALUE tokens into env
   const env: Record<string, string> = {};
   let cmdIndex = 0;
-
   for (let i = 0; i < tokens.length; i++) {
     const match = tokens[i].match(/^([A-Z_][A-Z0-9_]*)=(.*)$/);
-    if (match) {
-      env[match[1]] = match[2];
-      cmdIndex = i + 1;
-    } else {
-      break;
-    }
+    if (match) { env[match[1]] = match[2]; cmdIndex = i + 1; }
+    else { break; }
   }
 
   const remaining = tokens.slice(cmdIndex);
-  return {
-    cmd: remaining[0] ?? "",
-    args: remaining.slice(1),
-    env,
-  };
+  return { cmd: remaining[0] ?? "", args: remaining.slice(1), env };
 }
 
 async function connectAndRun<T>(
@@ -76,17 +50,14 @@ async function connectAndRun<T>(
   if (!cmd) throw new Error("Empty command");
 
   const transport = new StdioClientTransport({
-    command: cmd,
-    args,
+    command: cmd, args,
     env: Object.keys(env).length > 0 ? env : undefined,
     stderr: "pipe",
   });
 
   const client = new Client({ name: "mcp-man", version: "0.1.0" }, {});
-
-  // Collect stderr for better error messages
   const stderrChunks: Buffer[] = [];
-  // @ts-ignore — internal but useful for debugging
+  // @ts-ignore
   transport._stderrStream?.on("data", (d: Buffer) => stderrChunks.push(d));
 
   try {
@@ -155,33 +126,23 @@ export function startApiServer() {
         if (q) {
           const lq = q.toLowerCase();
           results = results.filter(
-            (s) =>
-              s.name.toLowerCase().includes(lq) ||
-              s.description.toLowerCase().includes(lq)
+            (s) => s.name.toLowerCase().includes(lq) || s.description.toLowerCase().includes(lq)
           );
         }
         if (tag) results = results.filter((s) => s.tags.includes(tag));
         return json(res, results);
       }
 
-      // POST /api/inspect
+      // POST /api/inspect — single server
       if (req.method === "POST" && url.pathname === "/api/inspect") {
         const body = await readBody(req);
         let parsed: { command?: string };
-        try {
-          parsed = JSON.parse(body);
-        } catch {
-          return json(res, { error: "Invalid JSON body" }, 400);
-        }
-        if (!parsed.command?.trim()) {
-          return json(res, { error: "command is required" }, 400);
-        }
+        try { parsed = JSON.parse(body); } catch { return json(res, { error: "Invalid JSON body" }, 400); }
+        if (!parsed.command?.trim()) return json(res, { error: "command is required" }, 400);
 
         const result = await connectAndRun(parsed.command, async (client) => {
           const [t, r, p] = await Promise.allSettled([
-            client.listTools(),
-            client.listResources(),
-            client.listPrompts(),
+            client.listTools(), client.listResources(), client.listPrompts(),
           ]);
           return {
             tools: t.status === "fulfilled" ? t.value.tools : [],
@@ -192,15 +153,44 @@ export function startApiServer() {
         return json(res, result);
       }
 
+      // POST /api/inspect-multi — inspect multiple servers in parallel
+      if (req.method === "POST" && url.pathname === "/api/inspect-multi") {
+        const body = await readBody(req);
+        let parsed: { commands?: string[] };
+        try { parsed = JSON.parse(body); } catch { return json(res, { error: "Invalid JSON body" }, 400); }
+        if (!Array.isArray(parsed.commands) || parsed.commands.length === 0) {
+          return json(res, { error: "commands array is required" }, 400);
+        }
+
+        const results = await Promise.allSettled(
+          parsed.commands.map((command) =>
+            connectAndRun(command, async (client) => {
+              const [t, r, p] = await Promise.allSettled([
+                client.listTools(), client.listResources(), client.listPrompts(),
+              ]);
+              return {
+                command,
+                tools: t.status === "fulfilled" ? t.value.tools : [],
+                resources: r.status === "fulfilled" ? r.value.resources : [],
+                prompts: p.status === "fulfilled" ? p.value.prompts : [],
+              };
+            })
+          )
+        );
+
+        const out = results.map((r, i) =>
+          r.status === "fulfilled"
+            ? r.value
+            : { command: parsed.commands![i], error: r.reason?.message ?? String(r.reason), tools: [], resources: [], prompts: [] }
+        );
+        return json(res, out);
+      }
+
       // POST /api/test
       if (req.method === "POST" && url.pathname === "/api/test") {
         const body = await readBody(req);
         let parsed: { command?: string; tool?: string; args?: unknown };
-        try {
-          parsed = JSON.parse(body);
-        } catch {
-          return json(res, { error: "Invalid JSON body" }, 400);
-        }
+        try { parsed = JSON.parse(body); } catch { return json(res, { error: "Invalid JSON body" }, 400); }
         if (!parsed.command?.trim()) return json(res, { error: "command is required" }, 400);
         if (!parsed.tool?.trim()) return json(res, { error: "tool is required" }, 400);
 
@@ -213,6 +203,37 @@ export function startApiServer() {
         return json(res, result);
       }
 
+      // POST /api/run-collection — run a sequence of tool calls in order
+      if (req.method === "POST" && url.pathname === "/api/run-collection") {
+        const body = await readBody(req);
+        let parsed: { steps?: { command: string; tool: string; args: Record<string, unknown> }[] };
+        try { parsed = JSON.parse(body); } catch { return json(res, { error: "Invalid JSON body" }, 400); }
+        if (!Array.isArray(parsed.steps) || parsed.steps.length === 0) {
+          return json(res, { error: "steps array is required" }, 400);
+        }
+
+        const stepResults = [];
+        for (const step of parsed.steps) {
+          const startTime = Date.now();
+          try {
+            const result = await connectAndRun(step.command, async (client) => {
+              return client.callTool({ name: step.tool, arguments: step.args ?? {} });
+            });
+            stepResults.push({
+              command: step.command, tool: step.tool, args: step.args,
+              result, durationMs: Date.now() - startTime, error: null,
+            });
+          } catch (e) {
+            stepResults.push({
+              command: step.command, tool: step.tool, args: step.args,
+              result: null, durationMs: Date.now() - startTime,
+              error: e instanceof Error ? e.message : String(e),
+            });
+          }
+        }
+        return json(res, { steps: stepResults });
+      }
+
       json(res, { error: "not found" }, 404);
     } catch (e) {
       const msg = e instanceof Error ? e.message : String(e);
@@ -221,9 +242,7 @@ export function startApiServer() {
     }
   });
 
-  server.on("error", (e) => {
-    console.error("API server error:", e.message);
-  });
+  server.on("error", (e) => { console.error("API server error:", e.message); });
 
   server.listen(PORT, () => {
     console.log(`\n  mcp-man API  →  http://localhost:${PORT}`);
